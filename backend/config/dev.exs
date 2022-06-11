@@ -22,7 +22,8 @@ config :backend, BackendWeb.Endpoint,
   secret_key_base: "GXa5hIOqjGlDmcQ6xbwXvzDA6bllMJuJBEYjcoNFs70v7ip4w6UOl9wD9YSYnAOU",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
