@@ -14,16 +14,15 @@ defmodule BackendWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", BackendWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
-  # Other scopes may use custom stacks.
   scope "/api", BackendWeb do
     pipe_through :api
 
     resources "/breeds", BreedController, except: [:new, :edit]
+  end
+
+  scope "/", BackendWeb do
+    pipe_through :browser
+
+    get "/*path", PageController, :index
   end
 end

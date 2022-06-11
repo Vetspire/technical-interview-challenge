@@ -2,7 +2,7 @@
 // https://tailwindcss.com/docs/configuration
 module.exports = {
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
+    './js/**/*.{js,jsx,ts,tsx}',
     '../lib/*_web.ex',
     '../lib/*_web/**/*.*ex'
   ],

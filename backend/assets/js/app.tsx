@@ -1,13 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import Greeter from "./greeter";
+import NavBar from './NavBar';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('app') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <Greeter name="Jake" />
-  </React.StrictMode>
-)
+function App() {
+  return (
+    <div className="app">
+      <NavBar />
+      <main className="mt-12 mx-auto px-4 max-w-screen-xl lg:px-8">
+        {/* Layout based on https://www.floatui.com/components/cards/ */}
+        <Outlet />
+      </main>
+    </div>
+  )
+}
+
+export default App;
