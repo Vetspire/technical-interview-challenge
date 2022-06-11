@@ -4,3 +4,5 @@ export interface Breed {
   image: string,
   description: string
 }
+
+export type MaybeBreed = Breed | null

@@ -16,7 +16,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Default />} />
-          <Route path="breeds/:id" element={<BreedDetail />} />
+          <Route path="breeds/:breedId" element={<BreedDetail />} />
           <Route path="breeds" element={<BreedList />} />
         </Route>
       </Routes>
