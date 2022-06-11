@@ -55,6 +55,6 @@ defmodule BackendWeb.BreedController do
   end
 
   defp get_image_url(conn, %Image{filename: filename, upload_type: :local}) do
-    Routes.static_path(conn, filename)
+    Routes.static_url(conn, filename)
   end
 end
