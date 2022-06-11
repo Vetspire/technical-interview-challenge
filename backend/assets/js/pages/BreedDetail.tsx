@@ -15,16 +15,20 @@ function BreedDetail() {
   const [breed, setBreed] = useState<MaybeBreed>(null);
 
   useEffect(() => {
-    // Will just set the breed to null in case of a 404
-    // or any other error.
-    // Not the most robust error handling but should be
-    // sufficient for this app
     getBreed(breedId || "1").then(setBreed);
   }, [breedId])
 
   if (breed == null) {
     return (
-      <h2>Breed not found.</h2>
+      <div>
+        {/* Show nothing while loading. This is a quick fix to avoid flashing error text */}
+      </div>
+    )
+  }
+
+  if (breed instanceof Error) {
+    return (
+      <p>{breed.message}</p>
     )
   }
 

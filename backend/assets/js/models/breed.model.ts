@@ -5,4 +5,4 @@ export interface Breed {
   description: string
 }
 
-export type MaybeBreed = Breed | null
+export type MaybeBreed = Breed | null | Error

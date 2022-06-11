@@ -12,7 +12,15 @@ export async function getBreed(id: string): Promise<MaybeBreed> {
   const response = await fetch(`/api/breeds/${id}`)
   if (response.ok) {
     return response.json().then(data => data.data)
-  } else {
-    return null
+  }
+  return handleError(response)
+}
+
+function handleError(response: Response) {
+  switch (response.status) {
+    case 404:
+      return new Error("Breed not found.")
+    default:
+      return new Error("Problem loading breed.")
   }
 }
