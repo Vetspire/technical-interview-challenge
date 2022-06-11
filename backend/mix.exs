@@ -48,7 +48,6 @@ defmodule Backend.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:uuid, "~> 1.1"},
-      {:cors_plug, ">= 0.0.0"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
