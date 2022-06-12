@@ -20,6 +20,11 @@ function BreedList() {
         <p className="mt-3 text-gray-500">
           All your favorite dogs, now in one place.
         </p>
+        <Link to="new">
+          <button type="button" className="py-2.5 px-7 my-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+            Add a Breed
+          </button>
+        </Link>
       </div>
       <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {breeds.map(BreedCard)}

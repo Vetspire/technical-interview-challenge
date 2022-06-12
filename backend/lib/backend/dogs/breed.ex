@@ -16,7 +16,7 @@ defmodule Backend.Dogs.Breed do
   def changeset(breed, attrs) do
     breed
     |> cast(attrs, [:name, :description])
-    |> cast_embed(:image)
+    |> put_embed(:image, attrs.image)
     |> validate_required([:name, :image, :description])
   end
 end

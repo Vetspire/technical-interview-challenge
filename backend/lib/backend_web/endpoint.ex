@@ -20,7 +20,7 @@ defmodule BackendWeb.Endpoint do
     at: "/",
     from: :backend,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: ~w(assets fonts images uploads favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

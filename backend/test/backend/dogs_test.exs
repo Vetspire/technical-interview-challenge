@@ -35,7 +35,12 @@ defmodule Backend.DogsTest do
 
     test "update_breed/2 with valid data updates the breed" do
       breed = breed_fixture()
-      update_attrs = %{description: "some updated description", image: "some updated image", name: "some updated name"}
+
+      update_attrs = %{
+        description: "some updated description",
+        image: "some updated image",
+        name: "some updated name"
+      }
 
       assert {:ok, %Breed{} = breed} = Dogs.update_breed(breed, update_attrs)
       assert breed.description == "some updated description"

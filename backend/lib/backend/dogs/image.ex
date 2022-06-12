@@ -11,6 +11,6 @@ defmodule Backend.Dogs.Image do
   def changeset(image, attrs) do
     image
     |> cast(attrs, [:filename, :original_filename, :upload_type])
-    |> validate_required([:filename])
+    |> validate_required([:filename, :upload_type])
   end
 end
