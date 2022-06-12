@@ -1,37 +1,13 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import BreadCrumbs from "./BreadCrumbs";
 
 function NavBar() {
   return (
     <nav className="w-full flex flex-wrap justify-betweeen px-4 py-4 bg-gray-100 text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg navbar navbar-expand-lg navbar-light">
       <Logo />
-      {BreadCrumbs()}
+      <BreadCrumbs />
     </nav>
-  )
-}
-
-function BreadCrumbs() {
-  return (
-    <ol className="inline-flex items-center space-x-1 md:space-x-3">
-      <li className="inline-flex items-center">
-        <div className="flex items-center">
-          <Link to="/" className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Dogonomicon</Link>
-        </div>
-      </li>
-      <li className="inline-flex items-center">
-        <div className="flex items-center">
-          <BreadCrumbArrow />
-          <Link to="breeds" className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Breeds</Link>
-        </div>
-      </li>
-      <li className="inline-flex items-center">
-        <div className="flex items-center">
-          <BreadCrumbArrow />
-          <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Blue Heeler</span>
-        </div>
-      </li>
-    </ol>
   )
 }
 
@@ -47,14 +23,6 @@ function Logo() {
 		 M266.115,398.364H130.614v-84.483h103.904l-0.166,0.063L266.115,398.364z M277.727,302.34H130.385v-98.348h213.218v31.083h31.499
 		C360.187,274.349,322.166,302.34,277.727,302.34z M378.84,223.075h-23.237v-19.083h26.084
 		C381.327,210.531,380.355,216.909,378.84,223.075z"/><rect width="22.365" height="20" x="194.065" y="225.98" /></svg>
-  )
-}
-
-function BreadCrumbArrow() {
-  return (
-    <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
-    </svg>
   )
 }
 
