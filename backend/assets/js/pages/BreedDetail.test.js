@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import BreedService from "../services/breed-service";
 import BreedDetail from "./BreedDetail"
 
 // Quick fix to deal with providing the path param in test
