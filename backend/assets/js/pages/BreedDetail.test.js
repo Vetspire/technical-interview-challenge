@@ -56,7 +56,7 @@ it("renders breed data", async () => {
   expect(container.textContent).toContain(fakeBreed.description)
 })
 
-it("renders an error when no breed returned", async () => {
+it("renders an error when a 500 status returned", async () => {
   global.fetch = jest.fn().mockImplementation(() =>
     Promise.resolve({
       ok: false,
@@ -73,4 +73,23 @@ it("renders an error when no breed returned", async () => {
   delete global.fetch
 
   expect(container.textContent).toContain("Problem loading breed")
+})
+
+it("renders a not found message when a 404 is returned", async () => {
+  global.fetch = jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      ok: false,
+      status: 404,
+    })
+  )
+
+  await act(async () => {
+    const root = ReactDOM.createRoot(container)
+    root.render(<BreedDetail />)
+  })
+
+  global.fetch.mockClear()
+  delete global.fetch
+
+  expect(container.textContent).toContain("Breed not found")
 })
