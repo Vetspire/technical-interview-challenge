@@ -14,13 +14,13 @@ We encourage you to include a README with notes about your language and framewor
 decisions.
 
 ### Features
-- Backend API that serves:
+- [x] Backend API that serves:
     - A list of available dog breeds based on those available in `/images`
     - Individual dog images by breed
-- Frontend UI that provides:
+- [x] Frontend UI that provides:
     - A list of dog breeds
     - The ability to choose a breed and display the image for it
-- Bonus Feature:
+- [x] Bonus Feature:
   - Ability to add a new breed with a new image
 
 
@@ -95,7 +95,11 @@ Further Development:
 ### Handle File Upload
 The Uploader logic on the backend is my favorite part of the app. It designed to handle local and R2 uploads. Local upload support was important to me so that the app would be easy to run in development. Further work could be spend here adding additional guards and error handling or retry logic.
 
+I modeled the `FileUpload` as an embedded_schema, this has turned out to be less than ideal. There's no easy way to handle dangling files in the bucket or uploads directory. This would be better handled as a table with ForeignKey relationships. Additionally, Ecto transactions could be used to clean up the file after failed inserts.
+
 Further Development:
+  - Switch FileUpload to a table-backed schema
+  - Add Ecto transactions
   - Additional guards on files being uploaded
   - Additional error handling and retry logic
   - Handle JSON uploads instead/in addition to multi-part forms
