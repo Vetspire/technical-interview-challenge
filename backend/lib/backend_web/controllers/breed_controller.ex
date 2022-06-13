@@ -6,6 +6,19 @@ defmodule BackendWeb.BreedController do
 
   action_fallback BackendWeb.FallbackController
 
+
+  if Application.compile_env!(:backend, :environment) == :prod do
+    plug :basic_env_auth when action in [:create]
+
+    defp basic_env_auth(conn, opts) do
+      # Default provided here, runtime.exs will raise if ENV not provided in prod
+      usename = System.fetch_env!("UPLOAD_USERNAME")
+      password = System.fetch_env!("UPLOAD_PASSWORD")
+
+      Plug.basic_auth(conn, username: username, password: password)
+    end
+  end
+
   def index(conn, _params) do
     breeds = Dogs.list_breeds()
     render(conn, "index.json", breeds: breeds)
@@ -13,6 +26,8 @@ defmodule BackendWeb.BreedController do
 
   @doc """
   Handle raw HTML Multi-part form uploads
+
+  Submitting without a file will crash currently.
   """
   def create(conn, %{
         "breedName" => name,

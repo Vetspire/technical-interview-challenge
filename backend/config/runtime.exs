@@ -69,13 +69,14 @@ r2_account_id = System.get_env("R2_ACCOUNT_ID")
 r2_access_key_id = System.get_env("R2_ACCESS_KEY_ID")
 r2_secret_access_key = System.get_env("R2_SECRET_ACCESS_KEY")
 r2_bucket_name = System.get_env("R2_BUCKET_NAME")
+r2_query_secret = System.get_env("R2_QUERY_SECRET")
 
 r2_error_msg =
-  if nil in [r2_account_id, r2_access_key_id, r2_secret_access_key, r2_bucket_name],
+  if nil in [r2_account_id, r2_access_key_id, r2_secret_access_key, r2_bucket_name, r2_query_secret],
     do: """
     Runtime Config error. \
     Missing required environment variable from: \
-    R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME
+    R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_QUERY_SECRET
     """
 
 # In prod R2 will be the default uploader.
@@ -94,8 +95,9 @@ end
 cloudflare_r2_scheme = "https://"
 cloudflare_r2_host = "#{r2_account_id}.r2.cloudflarestorage.com"
 
-config :backend, BackendWeb.Uploaders.S3Uploader,
+config :backend, BackendWeb.Uploaders.R2Uploader,
   bucket: r2_bucket_name,
+  query_secret: r2_query_secret
   endpoint: cloudflare_r2_scheme <> cloudflare_r2_host
 
 config :ex_aws,

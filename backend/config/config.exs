@@ -8,7 +8,8 @@
 import Config
 
 config :backend,
-  ecto_repos: [Backend.Repo]
+  ecto_repos: [Backend.Repo],
+  environment: config_env()
 
 # Configures the endpoint
 config :backend, BackendWeb.Endpoint,

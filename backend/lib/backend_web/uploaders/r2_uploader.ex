@@ -14,8 +14,9 @@ defmodule BackendWeb.Uploaders.R2Uploader do
 
   def file_url(%FileUpload{filename: filename}) do
     endpoint = fetch_config(:endpoint)
+    query_secret = fetch_config(:query_secret)
 
-    "#{endpoint}/#{filename}"
+    "#{endpoint}/#{filename}?verify=#{query_secret}"
   end
 
   def upload(src_file, destination_file, content_type) do
