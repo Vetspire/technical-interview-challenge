@@ -2,8 +2,25 @@ defmodule BackendWeb.Uploader do
   alias Backend.FileUpload
   alias BackendWeb.Uploaders.{LocalUploader, R2Uploader, TestUploader}
 
-  # 15 MB limit
-  @max_upload_size 15 * 1000 * 1000
+  defmodule UploadError do
+    defexception [:message]
+
+    def new(message) do
+      %__MODULE__{message: message}
+    end
+  end
+
+  @moduledoc """
+  Implements file upload functionality and exposes a behaviour
+  to implement different upload providers.
+
+  Currently only allows image uploads.
+
+  Right now that includes `#{LocalUploader}` and `#{R2Uploader}`.
+  """
+
+  # 5 MB limit
+  @max_upload_size 5 * 1000 * 1000
 
   @callback upload(
               src_file :: String.t(),
@@ -44,6 +61,7 @@ defmodule BackendWeb.Uploader do
     dest_file = "#{new_uuid}.#{file_ext}"
 
     with true <- File.exists?(src_file),
+         :ok <- allowed_content_type?(content_type),
          {:dir, false} <- {:dir, File.dir?(src_file)},
          {:ok, %File.Stat{size: size}} when size < @max_upload_size <- File.stat(src_file),
          {:ok, upload_type} <- uploader.upload(src_file, dest_file, content_type) do
@@ -54,8 +72,9 @@ defmodule BackendWeb.Uploader do
          filename: dest_file
        })}
     else
-      {:ok, %File.Stat{}} -> {:error, "Uploaded file is too big"}
-      {:dir, true} -> {:error, "Cannot upload directory"}
+      {:ok, %File.Stat{}} -> {:error, UploadError.new("Uploaded file is too big")}
+      {:dir, true} -> {:error, UploadError.new("Cannot upload directory")}
+      {:error, :unsupported_content_type} -> {:error, UploadError.new("File type not allowed")}
       err -> err
     end
   end
@@ -86,6 +105,9 @@ defmodule BackendWeb.Uploader do
   defp get_file_ext(filename) do
     Path.extname(filename) |> String.replace_leading(".", "")
   end
+
+  defp allowed_content_type?("image/" <> _image_type), do: :ok
+  defp allowed_content_type?(params), do: {:error, :unsupported_content_type} |> tap(fn _ -> IO.inspect(params, label: "hmm") end)
 
   defp config_uploader, do: Application.get_env(:backend, __MODULE__, LocalUploader)
 end

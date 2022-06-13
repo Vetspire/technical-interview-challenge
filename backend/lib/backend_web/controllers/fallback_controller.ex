@@ -21,4 +21,10 @@ defmodule BackendWeb.FallbackController do
     |> put_view(BackendWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, %BackendWeb.Uploader.UploadError{message: msg}}) do
+    conn
+    |> put_status(400)
+    |> json(%{error: msg})
+  end
 end
