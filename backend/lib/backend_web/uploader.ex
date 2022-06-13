@@ -13,6 +13,14 @@ defmodule BackendWeb.Uploader do
 
   @callback file_url(file_upload :: FileUpload.t()) :: String.t()
 
+  @doc """
+  Upload a file using the configured uploader.
+
+  Takes either a `Plug.Upload` or a path to a source file. (source file should not be user supplied)
+
+  Opts:
+    - `:uploader`: Will override the uploader from config. A module that fulfils `#{__MODULE__}` behaviour.
+  """
   def upload_file(upload, opts \\ [])
 
   def upload_file(%Plug.Upload{} = upload, opts) do
@@ -22,9 +30,6 @@ defmodule BackendWeb.Uploader do
     do_upload_file(upload.path, file_ext, upload.filename, content_type, opts)
   end
 
-  @doc """
-  For parsing internal uploads. Should not be user facing.
-  """
   def upload_file(src_file, opts) do
     file_ext = get_file_ext(src_file)
     original_filename = Path.basename(src_file)
@@ -39,6 +44,7 @@ defmodule BackendWeb.Uploader do
     dest_file = "#{new_uuid}.#{file_ext}"
 
     with true <- File.exists?(src_file),
+        {:dir, false} <- {:dir, File.dir?(src_file)},
          {:ok, %File.Stat{size: size}} when size < @max_upload_size <- File.stat(src_file),
          {:ok, upload_type} <- uploader.upload(src_file, dest_file, content_type) do
       {:ok,
@@ -49,10 +55,16 @@ defmodule BackendWeb.Uploader do
        })}
     else
       {:ok, %File.Stat{}} -> {:error, "Uploaded file is too big"}
+      {:dir, true} -> {:error, "Cannot upload directory"}
       err -> err
     end
   end
 
+  @doc """
+  Get the hosted URL for a `Backend.FileUpload`.
+
+  I got a bit lazy here and just hardcoded the two supported uploaders.
+  """
   def get_file_url(%FileUpload{upload_type: :local} = file) do
     LocalUploader.file_url(file)
   end

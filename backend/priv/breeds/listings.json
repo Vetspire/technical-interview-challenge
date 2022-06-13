@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Boxer",
+    "description": "My friend had one named Cassius Clay",
+    "image": "priv/breeds/boxer.jpg"
+  },
+  {
+    "name": "Border Collie",
+    "description": "Wasn't Lassie a Border Collie?",
+    "image": "priv/breeds/border_collie.jpg"
+  },
+  {
+    "name": "Great Dane",
+    "description": "Overall, pretty great",
+    "image": "priv/breeds/great_dane.jpg"
+  },
+  {
+    "name": "Afenpinscher",
+    "description": "aka Monkey Terrier",
+    "image": "priv/breeds/affenpinscher.jpg"
+  },
+  {
+    "name": "Cocker Spaniel",
+    "description": "Google says they make good family pets",
+    "image": "priv/breeds/cocker_spaniel.jpg"
+  },
+  {
+    "name": "English Bulldog",
+    "description": "Winston Churchill's favorite?",
+    "image": "priv/breeds/english_bulldog.jpg"
+  },
+  {
+    "name": "Irish Terrier",
+    "description": "Originally from Ireland",
+    "image": "priv/breeds/irish_terrier.jpg"
+  },
+  {
+    "name": "norwich_terrier",
+    "description": "They are small",
+    "image": "priv/breeds/affenpinscher.jpg"
+  },
+  {
+    "name": "Pomeranian",
+    "description": "Not the easiest to spell",
+    "image": "priv/breeds/pomeranian.jpg"
+  },
+  {
+    "name": "Shetland Sheepdog",
+    "description": "The last one on the list!",
+    "image": "priv/breeds/shetland_sheepdog.jpg"
+  }
+]
