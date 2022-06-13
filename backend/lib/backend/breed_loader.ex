@@ -7,8 +7,10 @@ defmodule Backend.BreedLoader do
   alias Backend.Dogs
   alias BackendWeb.Uploader
 
+  @listing_path "priv/breeds/listings.json"
+
   def load_defaults do
-    breed_listings = "priv/breeds/listings.json" |> File.read!() |> Jason.decode!()
+    breed_listings = @listing_path |> get_full_path() |> File.read!() |> Jason.decode!()
 
     breed_listings
     |> Enum.map(&upload_breed/1)
@@ -19,9 +21,15 @@ defmodule Backend.BreedLoader do
   end
 
   def upload_breed(%{"name" => name, "description" => description, "image" => src_file}) do
-    with {:ok, file_upload} <- Uploader.upload_file(src_file),
+    with {:ok, file_upload} <- src_file |> get_full_path() |> Uploader.upload_file(),
     {:ok, breed} = Dogs.create_breed(%{name: name, description: description, image: file_upload}) do
       breed
     end
+  end
+
+  defp get_full_path(filename) do
+    :backend
+    |> Application.app_dir()
+    |> Path.join(filename)
   end
 end

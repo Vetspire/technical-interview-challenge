@@ -27,7 +27,6 @@ defmodule BackendWeb.Uploaders.R2Uploader do
            |> S3.Upload.stream_file()
            |> S3.upload(bucket_name, destination_file, content_type: content_type)
            |> ExAws.request() do
-      result |> IO.inspect(label: "ExAWS Result")
       {:ok, :r2}
     end
   end

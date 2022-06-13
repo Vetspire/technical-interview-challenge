@@ -10,12 +10,12 @@ defmodule BackendWeb.BreedController do
   if Application.compile_env!(:backend, :environment) == :prod do
     plug :basic_env_auth when action in [:create]
 
-    defp basic_env_auth(conn, opts) do
+    defp basic_env_auth(conn, _opts) do
       # Default provided here, runtime.exs will raise if ENV not provided in prod
-      usename = System.fetch_env!("UPLOAD_USERNAME")
+      username = System.fetch_env!("UPLOAD_USERNAME")
       password = System.fetch_env!("UPLOAD_PASSWORD")
 
-      Plug.basic_auth(conn, username: username, password: password)
+      Plug.BasicAuth.basic_auth(conn, username: username, password: password)
     end
   end
 
