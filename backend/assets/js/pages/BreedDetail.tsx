@@ -10,7 +10,7 @@ type BreedDetailParams = {
 
 
 
-function BreedDetail() {
+function BreedDetail(): JSX.Element {
   const { breedId } = useParams<BreedDetailParams>();
   const [breed, setBreed] = useState<MaybeBreed>(null);
 

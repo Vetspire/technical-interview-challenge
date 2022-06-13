@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Breed } from "../models/breed.model";
 import {getBreedList} from '../services/breed-service'
 
-function BreedList() {
+function BreedList(): JSX.Element {
   const [breeds, setBreeds] = useState<Breed[]>([]);
 
   useEffect(() => {
