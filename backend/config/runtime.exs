@@ -102,7 +102,7 @@ cloudflare_r2_host = "#{r2_account_id}.r2.cloudflarestorage.com"
 config :backend, BackendWeb.Uploaders.R2Uploader,
   bucket: r2_bucket_name,
   query_secret: r2_query_secret,
-  endpoint: "https://dogonomicon-worker.adqven.workers.dev"
+  endpoint: "https://dogonomicon-worker.jakeprem.workers.dev"
 
 config :ex_aws,
   access_key_id: r2_access_key_id,
