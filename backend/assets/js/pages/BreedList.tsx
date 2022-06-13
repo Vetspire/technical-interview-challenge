@@ -26,7 +26,7 @@ function BreedList(): JSX.Element {
           </button>
         </Link>
       </div>
-      <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 mb-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {breeds.map(BreedCard)}
       </div>
     </div>
