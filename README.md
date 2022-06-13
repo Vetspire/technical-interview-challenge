@@ -1,18 +1,3 @@
-## Vetspire Take-home (max 2 hours)
-
-Fork this repo. Build a simple full stack app using frameworks of your choice. Submit your results as a pull request
-to this repo with instruction on how to build/run it or, even better, a link to where we can see it already
-running/deployed. Alternatively, feel free to send us an archive file of the work.
-
-There is probably more here than can be finished in two hours. Don't worry about completeness. Focus on what's 
-important and interesting to you.   
-
-We use `Elixir`, `Ecto`, `Absinthe`, `GraphQL`, `Typescript/Javascript` and `React` at Vetspire but you are welcome to use 
-whatever languages and frameworks you prefer.
-
-We encourage you to include a README with notes about your language and framework choices as well as your design 
-decisions.
-
 ### Features
 - [x] Backend API that serves:
     - A list of available dog breeds based on those available in `/images`
@@ -72,11 +57,13 @@ I had two initial goals in addition to the basic feature requirements:
   - Host images using a CDN for performance
   - Host the app in two regions on Fly.io's free tier
 
+With those goals in mind I focused on feature development at the cost of unit testing and additional error handling logic. In a real app I would slow down and build out tests alongside each feature. Definitely went with a bit more of a prototyping mindset than methodical feature development.
+
+I did get a bit carried and spent a little more than 2 hours chasing those goals.
+
 In the end I accomplished the first goal. The second one still needs a bit more work to add clustering
 and to properly handle database writes from multiple regions. Postgres would have somewhat simplified
 this step.
-
-With those goals in mind I focused on feature development at the cost of unit testing and additional error handling logic. In a real app I would slow down and build out tests alongside each feature. 
 
 Some mitigating factors that help this app be reliable even without tests:
   - Typescript typing on the frontend helps check for a number of errors that would make it to runtime in Javascript
