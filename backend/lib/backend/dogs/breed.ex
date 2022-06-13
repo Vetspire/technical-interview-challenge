@@ -2,12 +2,12 @@ defmodule Backend.Dogs.Breed do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Backend.Dogs.Image
+  alias Backend.FileUpload
 
   schema "breeds" do
     field :description, :string
     field :name, :string
-    embeds_one :image, Image
+    embeds_one :image, FileUpload
 
     timestamps()
   end

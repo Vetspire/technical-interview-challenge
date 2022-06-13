@@ -2,7 +2,7 @@ defmodule BackendWeb.BreedController do
   use BackendWeb, :controller
 
   alias Backend.Dogs
-  alias Backend.Uploader
+  alias BackendWeb.Uploader
 
   action_fallback BackendWeb.FallbackController
 
@@ -19,7 +19,7 @@ defmodule BackendWeb.BreedController do
         "breedDescription" => description,
         "breedImage" => image
       }) do
-    with {:ok, uploaded_image} <- Uploader.upload(image),
+    with {:ok, uploaded_image} <- Uploader.upload_file(image),
          {:ok, breed} <-
            Dogs.create_breed(%{name: name, description: description, image: uploaded_image}) do
       conn

@@ -61,3 +61,47 @@ if config_env() == :prod do
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
 end
+
+#########################################
+# Configure Cloudflare R2 Bucket Access #
+#########################################
+r2_account_id = System.get_env("R2_ACCOUNT_ID")
+r2_access_key_id = System.get_env("R2_ACCESS_KEY_ID")
+r2_secret_access_key = System.get_env("R2_SECRET_ACCESS_KEY")
+r2_bucket_name = System.get_env("R2_BUCKET_NAME")
+
+r2_error_msg =
+  if nil in [r2_account_id, r2_access_key_id, r2_secret_access_key, r2_bucket_name],
+    do: """
+    Runtime Config error. \
+    Missing required environment variable from: \
+    R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME
+    """
+
+# In prod R2 will be the default uploader.
+# Will crash if a required environment variable is missing.
+if config_env() == :prod do
+  if r2_error_msg, do: raise(r2_error_msg)
+  config :backend, BackendWeb.Uploader, BackendWeb.Uploaders.R2Uploader
+end
+
+if config_env() == :dev do
+  require Logger
+  if r2_error_msg, do: Logger.warn(r2_error_msg)
+  config :backend, BackendWeb.Uploader, BackendWeb.Uploaders.LocalUploader
+end
+
+cloudflare_r2_scheme = "https://"
+cloudflare_r2_host = "#{r2_account_id}.r2.cloudflarestorage.com"
+
+config :backend, BackendWeb.Uploaders.S3Uploader,
+  bucket: r2_bucket_name,
+  endpoint: cloudflare_r2_scheme <> cloudflare_r2_host
+
+config :ex_aws,
+  access_key_id: r2_account_id,
+  secret_access_key: r2_secret_access_key
+
+config :ex_aws, :s3,
+  scheme: cloudflare_r2_scheme,
+  host: cloudflare_r2_host

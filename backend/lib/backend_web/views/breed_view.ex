@@ -2,7 +2,7 @@ defmodule BackendWeb.BreedView do
   use BackendWeb, :view
   alias BackendWeb.BreedView
 
-  alias Backend.Uploader
+  alias BackendWeb.Uploader
 
   def render("index.json", %{breeds: breeds}) do
     %{data: render_many(breeds, BreedView, "breed.json")}
@@ -16,7 +16,7 @@ defmodule BackendWeb.BreedView do
     %{
       id: breed.id,
       name: breed.name,
-      image: Uploader.get_static_url(breed.image.filename),
+      image: Uploader.get_file_url(breed.image),
       description: breed.description
     }
   end
