@@ -5,13 +5,21 @@ defmodule BackendWeb.Uploaders.R2Uploader do
   alias ExAws.S3
 
   @moduledoc """
+  Uploads files to Cloudflare R2. Requires valid configuration.
+
+  Recommended (and configured) for use in production.
+
   Required confg (see runtime.exs):
     R2_BUCKET
     R2_ACCOUNT_ID
     R2_ACCESS_KEY_ID
     R2_SECRET_ACCESS_KEY
+    R2_QUERY_SECRET
   """
 
+  @doc """
+  Return the URL where the file can be accessed from Cloudflare
+  """
   def file_url(%FileUpload{filename: filename}) do
     endpoint = fetch_config(:endpoint)
     query_secret = fetch_config(:query_secret)
@@ -19,6 +27,9 @@ defmodule BackendWeb.Uploaders.R2Uploader do
     "#{endpoint}/#{filename}?verify=#{query_secret}"
   end
 
+  @doc """
+  Uploads the file to the configured Cloudflare Bucket
+  """
   def upload(src_file, destination_file, content_type) do
     bucket_name = fetch_config(:bucket)
 

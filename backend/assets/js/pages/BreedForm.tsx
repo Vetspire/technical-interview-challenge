@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 
-function BreedForm() {
+function BreedForm(): JSX.Element {
   return (
     <form action="/api/breeds" method="post" encType="multipart/form-data" name="breed" className="max-w-xl mx-auto border-2 px-5">
       <h2 className="text-3xl text-gray-800 font-semibold my-2">Add a Breed</h2>
@@ -32,7 +32,7 @@ function BreedForm() {
         </button>
       </div>
     </form>
-  )
+  );
 }
 
 export default BreedForm;

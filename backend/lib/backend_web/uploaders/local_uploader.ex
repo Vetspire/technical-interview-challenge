@@ -1,10 +1,19 @@
 defmodule BackendWeb.Uploaders.LocalUploader do
   @behaviour BackendWeb.Uploader
 
-  alias Backend.FileUpload
-
   @app :backend
   @upload_dir "priv/static/uploads"
+
+  @moduledoc """
+  Uploads files by storing them on the app server.
+
+  Currently used in conjunction with Plug.Static configuration. The `uploads` directory
+  has been added as an allowed folder under priv.
+
+  Not recommended for prodction use.
+  """
+
+  alias Backend.FileUpload
 
   @doc """
   Return the hosted URL for this file.
@@ -15,6 +24,9 @@ defmodule BackendWeb.Uploaders.LocalUploader do
     Path.join([BackendWeb.Endpoint.static_url(), "uploads", filename])
   end
 
+  @doc """
+  Upload file by copying to `#{@upload_dir}`. Will create directory if it doesn't exist.
+  """
   def upload(src_file, destination_file, _content_type) do
     ensure_upload_dir()
     upload_path = get_upload_path(destination_file)

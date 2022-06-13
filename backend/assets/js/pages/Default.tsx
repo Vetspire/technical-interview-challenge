@@ -8,7 +8,7 @@ function Default() {
         View Dog Breeds
       </button>
     </Link>
-  )
+  );
 }
 
 export default Default;

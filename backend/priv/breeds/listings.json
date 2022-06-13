@@ -35,9 +35,9 @@
     "image": "priv/breeds/irish_terrier.jpg"
   },
   {
-    "name": "norwich_terrier",
+    "name": "Affenpinscher",
     "description": "They are small",
-    "image": "priv/breeds/affenpinscher.jpg"
+    "image": "priv/breeds/norwich_terrier.jpg"
   },
   {
     "name": "Pomeranian",

@@ -2,6 +2,10 @@ defmodule Backend.FileUpload do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @moduledoc """
+  Represents and tracks an uploaded file
+  """
+
   embedded_schema do
     field :upload_type, Ecto.Enum, values: [:r2, :local, :test], default: :local
     field :filename, :string

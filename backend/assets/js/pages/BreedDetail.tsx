@@ -23,13 +23,13 @@ function BreedDetail(): JSX.Element {
       <div>
         {/* Show nothing while loading. This is a quick fix to avoid flashing error text */}
       </div>
-    )
+    );
   }
 
   if (breed instanceof Error) {
     return (
       <p>{breed.message}</p>
-    )
+    );
   }
 
   return (
@@ -44,7 +44,7 @@ function BreedDetail(): JSX.Element {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default BreedDetail;

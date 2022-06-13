@@ -1,8 +1,6 @@
 defmodule BackendWeb.BreedControllerTest do
   use BackendWeb.ConnCase
 
-  import Backend.DogsFixtures
-
   @create_attrs %{
     "breedDescription" => "some description",
     "breedImage" => "priv/breeds/boxer.jpg",
@@ -44,10 +42,5 @@ defmodule BackendWeb.BreedControllerTest do
       conn = post(conn, Routes.breed_path(conn, :create), @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
-  end
-
-  defp create_breed(_) do
-    breed = breed_fixture()
-    %{breed: breed}
   end
 end

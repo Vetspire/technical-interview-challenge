@@ -8,8 +8,8 @@ function BreedList(): JSX.Element {
   const [breeds, setBreeds] = useState<Breed[]>([]);
 
   useEffect(() => {
-      getBreedList().then(setBreeds)
-  }, [])
+      getBreedList().then(setBreeds);
+  }, []);
 
   return (
     <div>
@@ -30,7 +30,7 @@ function BreedList(): JSX.Element {
         {breeds.map(BreedCard)}
       </div>
     </div>
-  )
+  );
 }
 
 function BreedCard(breed: Breed): JSX.Element {
@@ -48,7 +48,7 @@ function BreedCard(breed: Breed): JSX.Element {
         </div>
       </Link>
     </article>
-  )
+  );
 }
 
 export default BreedList;

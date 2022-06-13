@@ -1,6 +1,6 @@
 defmodule Backend.Dogs do
   @moduledoc """
-  The Dogs context.
+  The Dogs context. Used to fetch and create breeds. Does not support editing breeds at this time.
   """
 
   import Ecto.Query, warn: false

@@ -1,6 +1,10 @@
 defmodule BackendWeb.Uploaders.TestUploader do
   @behaviour BackendWeb.Uploader
 
+  @moduledoc """
+  Only used for test environments.
+  """
+
   def file_url(file_upload) do
     file_upload.filename
   end

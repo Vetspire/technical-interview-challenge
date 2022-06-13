@@ -4,9 +4,9 @@ import { Link, Location, useLocation, useParams } from "react-router-dom";
 /**
  * This whole component is a pretty big hack.
  * The goal was to implement functional breadcrumbs without
- * bringing in additional dependencies or getting to crazy with props.
+ * bringing in additional dependencies or getting too crazy with props.
  * 
- * Better solutions (in no particular order):
+ * Better potential solutions (in no particular order):
  *   1. Use a state library like redux
  *   2. Use a context and/or hooks based solution
  *   3. Bring in a library from NPM (like use-react-router-breadcrumbs)
@@ -25,7 +25,7 @@ function determineCrumbLevel(currentPath: string): number {
 }
 
 function maybeBreedName(state): string | undefined {
-  return state?.breedName
+  return state?.breedName;
 }
 
 /**
@@ -59,7 +59,7 @@ function BreadCrumbs() {
       {crumbState.crumbLevel >= 1 && <Crumb text="Breeds" to="breeds" />}
       {crumbState.crumbLevel >= 2 && <Crumb text={crumbState.breedName || crumbState.breedId || "View Breed"} to={`/breeds/${crumbState.breedId}`} />}
     </ol>
-  )
+  );
 }
 
 interface CrumbProps {
@@ -78,7 +78,7 @@ function Crumb({first = false, text, to}: CrumbProps) {
         </div>
       </Link>
     </li>
-  )
+  );
 }
 
 function BreadCrumbArrow() {
@@ -86,7 +86,7 @@ function BreadCrumbArrow() {
     <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
       <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
     </svg>
-  )
+  );
 }
 
 export default BreadCrumbs;

@@ -2,16 +2,17 @@ import React from "react";
 
 import BreadCrumbs from "./BreadCrumbs";
 
-function NavBar() {
+function NavBar(): JSX.Element {
   return (
     <nav className="w-full flex flex-wrap justify-betweeen px-4 py-4 bg-gray-100 text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg navbar navbar-expand-lg navbar-light">
       <Logo />
       <BreadCrumbs />
     </nav>
-  )
+  );
 }
 
-function Logo() {
+function Logo(): JSX.Element {
+  // From https://iconscout.com/icon/dog-2194
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" enableBackground="new 0 0 512 512" viewBox="0 0 512 512"><path d="M214.422,192.451c12.712-53.14-31.288-111.48-33.224-114.01c-1.422-1.857-3.792-2.725-6.076-2.209
 		c-2.283,0.511-4.061,2.303-4.554,4.59l-3.897,18.07c-6.724-11.883-12.523-19.568-13.198-20.451
@@ -23,7 +24,7 @@ function Logo() {
 		 M266.115,398.364H130.614v-84.483h103.904l-0.166,0.063L266.115,398.364z M277.727,302.34H130.385v-98.348h213.218v31.083h31.499
 		C360.187,274.349,322.166,302.34,277.727,302.34z M378.84,223.075h-23.237v-19.083h26.084
 		C381.327,210.531,380.355,216.909,378.84,223.075z"/><rect width="22.365" height="20" x="194.065" y="225.98" /></svg>
-  )
+  );
 }
 
 export default NavBar;
