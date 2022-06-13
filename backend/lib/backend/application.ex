@@ -7,6 +7,10 @@ defmodule Backend.Application do
 
   @impl true
   def start(_type, _args) do
+    # Based on advice here: https://gist.github.com/mcrumm/98059439c673be7e0484589162a54a01
+    # Basically just for SQLite support
+    Backend.Release.migrate()
+
     children = [
       # Start the Ecto repository
       Backend.Repo,
