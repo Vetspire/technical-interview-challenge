@@ -21,6 +21,7 @@ System Requirements:
 Running steps:
   - `cd backend`
   - `mix setup`
+  - `cd assets` then `yarn` or `npm install`, then `cd ../`
   - `iex -S mix phx.server`
   - The default breeds can be loaded from IEx
     - `iex(1)>Backend.BreedLoader.load_defaults()`
@@ -65,7 +66,7 @@ In the end I accomplished the first goal. The second one still needs a bit more 
 and to properly handle database writes from multiple regions. Postgres would have somewhat simplified
 this step.
 
-Some mitigating factors that help this app be reliable even without tests:
+Some mitigating factors that help this app be reliable even without as many tests:
   - Typescript typing on the frontend helps check for a number of errors that would make it to runtime in Javascript
   - Serving the app directly from Phoenix means the frontend app availability is generally coupled to the API availability (though it's not impossible for the API to go down while someone already has the app loaded)
 
@@ -79,15 +80,15 @@ Further Development:
   - Should support paging
   - Needs some style work to handle images of different sizes
 ### Add a breed
-This is the biggest shortcut I took on the frontend. Handling file inputs in react requires creating a ref and doing some extra work with the File. Instead I just let it submit as a standard HTML form, letting the browser and Phoenix handle the complexity for me. Upgrading this to a real React implementation would be a top priority for continued development.
+This is the biggest shortcut I took on the frontend. Handling file inputs in React requires creating a ref and doing some extra work with the File API in Javascript. Instead I just let it submit as a standard HTML form using multipart form upload, letting the browser and Phoenix handle the complexity for me. Upgrading this to a real React implementation would be a top priority for continued development.
 
 On the backend this is protected by Basic Auth
 
 Further Development:
-  - Handle file upload using JSON
+  - Handle file upload using Javascript
 
 ### Handle File Upload
-The Uploader logic on the backend is my favorite part of the app. It designed to handle local and R2 uploads. Local upload support was important to me so that the app would be easy to run in development. Further work could be spend here adding additional guards and error handling or retry logic.
+The Uploader logic on the backend is my favorite part of the app. It designed to handle local and R2 uploads. Local upload support was important to me so that the app would be easy to run in development. Further work could be spent here adding additional guards and error handling or retry logic.
 
 I modeled the `FileUpload` as an embedded_schema, this has turned out to be less than ideal. There's no easy way to handle dangling files in the bucket or uploads directory. This would be better handled as a table with ForeignKey relationships. Additionally, Ecto transactions could be used to clean up the file after failed inserts.
 
