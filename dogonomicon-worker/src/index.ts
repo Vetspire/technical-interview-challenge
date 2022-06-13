@@ -17,6 +17,9 @@ export default {
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
 
+    // 1 year
+    const expiration = 31536000
+
     if (url.searchParams.get('verify') != env.QUERY_SECRET) {
       return new Response("Not Authorized", { status: 401 })
     }
@@ -32,6 +35,8 @@ export default {
         const headers = new Headers();
         object.writeHttpMetadata(headers);
         headers.set('etag', object.httpEtag);
+        headers.set('Cache-Control', "public, max-age=" + expiration);
+
 
         return new Response(object.body, {
           headers,
