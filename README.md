@@ -40,7 +40,7 @@ Running steps:
   - The default breeds can be loaded from IEx
     - `iex(1)>Backend.BreedLoader.load_defaults()`
 ## Production Guide
-The app is deployed using Cloudflare R2, Cloudflare Workers for static assets, and Fly.io for the app server. A full rundown is a bit out of scope but it basically follows standard deployment instructions for those services. Additionally there's a few places with values hardcoded for my production environment where I didn't fully parameterize things.
+The app is deployed using Cloudflare R2 and Cloudflare Workers for static assets, and Fly.io for the app server. A full rundown is a bit out of scope but it basically follows standard deployment instructions for those services. Additionally there's a few places with values hardcoded for my production environment where I didn't fully parameterize things.
   - https://fly.io/docs/getting-started/elixir/
   - https://developers.cloudflare.com/r2/get-started/
   - Some modifications for Fly to support SQLite: https://gist.github.com/mcrumm/98059439c673be7e0484589162a54a01
@@ -72,6 +72,10 @@ I had two initial goals in addition to the basic feature requirements:
   - Host images using a CDN for performance
   - Host the app in two regions on Fly.io's free tier
 
+In the end I accomplished the first goal. The second one still needs a bit more work to add clustering
+and to properly handle database writes from multiple regions. Postgres would have somewhat simplified
+this step.
+
 With those goals in mind I focused on feature development at the cost of unit testing and additional error handling logic. In a real app I would slow down and build out tests alongside each feature. 
 
 Some mitigating factors that help this app be reliable even without tests:
@@ -86,8 +90,11 @@ Nothing notable. Fetches info already available on BreedList. A more complex sch
 ### BreedList
 Further Development:
   - Should support paging
+  - Needs some style work to handle images of different sizes
 ### Add a breed
 This is the biggest shortcut I took on the frontend. Handling file inputs in react requires creating a ref and doing some extra work with the File. Instead I just let it submit as a standard HTML form, letting the browser and Phoenix handle the complexity for me. Upgrading this to a real React implementation would be a top priority for continued development.
+
+On the backend this is protected by Basic Auth
 
 Further Development:
   - Handle file upload using JSON
