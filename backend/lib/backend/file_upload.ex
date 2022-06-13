@@ -3,7 +3,7 @@ defmodule Backend.FileUpload do
   import Ecto.Changeset
 
   embedded_schema do
-    field :upload_type, Ecto.Enum, values: [:r2, :local], default: :local
+    field :upload_type, Ecto.Enum, values: [:r2, :local, :test], default: :local
     field :filename, :string
     field :original_filename, :string
   end

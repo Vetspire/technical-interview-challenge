@@ -22,7 +22,7 @@ defmodule BackendWeb.Uploaders.R2Uploader do
   def upload(src_file, destination_file, content_type) do
     bucket_name = fetch_config(:bucket)
 
-    with {:ok, result} <-
+    with {:ok, _result} <-
            src_file
            |> S3.Upload.stream_file()
            |> S3.upload(bucket_name, destination_file, content_type: content_type)

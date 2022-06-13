@@ -22,7 +22,8 @@ defmodule Backend.BreedLoader do
 
   def upload_breed(%{"name" => name, "description" => description, "image" => src_file}) do
     with {:ok, file_upload} <- src_file |> get_full_path() |> Uploader.upload_file(),
-    {:ok, breed} = Dogs.create_breed(%{name: name, description: description, image: file_upload}) do
+         {:ok, breed} =
+           Dogs.create_breed(%{name: name, description: description, image: file_upload}) do
       breed
     end
   end

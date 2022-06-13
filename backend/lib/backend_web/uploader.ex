@@ -1,6 +1,6 @@
 defmodule BackendWeb.Uploader do
   alias Backend.FileUpload
-  alias BackendWeb.Uploaders.{LocalUploader, R2Uploader}
+  alias BackendWeb.Uploaders.{LocalUploader, R2Uploader, TestUploader}
 
   # 15 MB limit
   @max_upload_size 15 * 1000 * 1000
@@ -9,7 +9,7 @@ defmodule BackendWeb.Uploader do
               src_file :: String.t(),
               destination_file :: String.t(),
               content_type :: String.t()
-            ) :: {:ok, :local | :r2} | {:error, reason :: term}
+            ) :: {:ok, :local | :r2 | :test} | {:error, reason :: term}
 
   @callback file_url(file_upload :: FileUpload.t()) :: String.t()
 
@@ -44,7 +44,7 @@ defmodule BackendWeb.Uploader do
     dest_file = "#{new_uuid}.#{file_ext}"
 
     with true <- File.exists?(src_file),
-        {:dir, false} <- {:dir, File.dir?(src_file)},
+         {:dir, false} <- {:dir, File.dir?(src_file)},
          {:ok, %File.Stat{size: size}} when size < @max_upload_size <- File.stat(src_file),
          {:ok, upload_type} <- uploader.upload(src_file, dest_file, content_type) do
       {:ok,
@@ -71,6 +71,10 @@ defmodule BackendWeb.Uploader do
 
   def get_file_url(%FileUpload{upload_type: :r2} = file) do
     R2Uploader.file_url(file)
+  end
+
+  def get_file_url(%FileUpload{upload_type: :test} = file) do
+    TestUploader.file_url(file)
   end
 
   defp get_file_ext(%Plug.Upload{content_type: content_type}) do

@@ -72,24 +72,28 @@ r2_bucket_name = System.get_env("R2_BUCKET_NAME")
 r2_query_secret = System.get_env("R2_QUERY_SECRET")
 
 r2_error_msg =
-  if nil in [r2_account_id, r2_access_key_id, r2_secret_access_key, r2_bucket_name, r2_query_secret],
-    do: """
-    Runtime Config error. \
-    Missing required environment variable from: \
-    R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_QUERY_SECRET
-    """
+  if nil in [
+       r2_account_id,
+       r2_access_key_id,
+       r2_secret_access_key,
+       r2_bucket_name,
+       r2_query_secret
+     ],
+     do: """
+     Runtime Config error. \
+     Missing required environment variable from: \
+     R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_QUERY_SECRET
+     """
 
 # In prod R2 will be the default uploader.
 # Will crash if a required environment variable is missing.
 if config_env() == :prod do
   if r2_error_msg, do: raise(r2_error_msg)
-  config :backend, BackendWeb.Uploader, BackendWeb.Uploaders.R2Uploader
 end
 
 if config_env() == :dev do
   require Logger
   if r2_error_msg, do: Logger.warn(r2_error_msg)
-  config :backend, BackendWeb.Uploader, BackendWeb.Uploaders.LocalUploader
 end
 
 cloudflare_r2_scheme = "https://"

@@ -12,7 +12,7 @@ defmodule Backend.DogsFixtures do
       attrs
       |> Enum.into(%{
         description: "some description",
-        image: "some image",
+        image: %Backend.FileUpload{},
         name: "some name"
       })
       |> Backend.Dogs.create_breed()

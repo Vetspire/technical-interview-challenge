@@ -51,26 +51,8 @@ defmodule Backend.Dogs do
   """
   def create_breed(attrs \\ %{}) do
     %Breed{}
-    |> Breed.changeset(attrs)
+    |> Breed.upload_changeset(attrs)
     |> Repo.insert()
-  end
-
-  @doc """
-  Updates a breed.
-
-  ## Examples
-
-      iex> update_breed(breed, %{field: new_value})
-      {:ok, %Breed{}}
-
-      iex> update_breed(breed, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_breed(%Breed{} = breed, attrs) do
-    breed
-    |> Breed.changeset(attrs)
-    |> Repo.update()
   end
 
   @doc """
@@ -87,18 +69,5 @@ defmodule Backend.Dogs do
   """
   def delete_breed(%Breed{} = breed) do
     Repo.delete(breed)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking breed changes.
-
-  ## Examples
-
-      iex> change_breed(breed)
-      %Ecto.Changeset{data: %Breed{}}
-
-  """
-  def change_breed(%Breed{} = breed, attrs \\ %{}) do
-    Breed.changeset(breed, attrs)
   end
 end

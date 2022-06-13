@@ -3,19 +3,12 @@ defmodule BackendWeb.BreedControllerTest do
 
   import Backend.DogsFixtures
 
-  alias Backend.Dogs.Breed
-
   @create_attrs %{
-    description: "some description",
-    image: "some image",
-    name: "some name"
+    "breedDescription" => "some description",
+    "breedImage" => "priv/breeds/boxer.jpg",
+    "breedName" => "some name"
   }
-  @update_attrs %{
-    description: "some updated description",
-    image: "some updated image",
-    name: "some updated name"
-  }
-  @invalid_attrs %{description: nil, image: nil, name: nil}
+  @invalid_attrs %{breedName: "", breedDescription: ""}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -30,58 +23,26 @@ defmodule BackendWeb.BreedControllerTest do
 
   describe "create breed" do
     test "renders breed when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.breed_path(conn, :create), breed: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      conn = post(conn, Routes.breed_path(conn, :create), @create_attrs)
+      assert html_response(conn, 302) =~ "/breeds/1"
 
-      conn = get(conn, Routes.breed_path(conn, :show, id))
+      # This id shouldn't be hardcoded. Using a redirect
+      # as the response to the create action instead of
+      # returning the newly created breed is the underlying
+      # problem. Ecto sandboxing protects us from clashing ids.
+      conn = get(conn, Routes.breed_path(conn, :show, 1))
 
       assert %{
-               "id" => ^id,
+               "id" => 1,
                "description" => "some description",
-               "image" => "some image",
+               "image" => _,
                "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.breed_path(conn, :create), breed: @invalid_attrs)
+      conn = post(conn, Routes.breed_path(conn, :create), @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update breed" do
-    setup [:create_breed]
-
-    test "renders breed when data is valid", %{conn: conn, breed: %Breed{id: id} = breed} do
-      conn = put(conn, Routes.breed_path(conn, :update, breed), breed: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, Routes.breed_path(conn, :show, id))
-
-      assert %{
-               "id" => ^id,
-               "description" => "some updated description",
-               "image" => "some updated image",
-               "name" => "some updated name"
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, breed: breed} do
-      conn = put(conn, Routes.breed_path(conn, :update, breed), breed: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "delete breed" do
-    setup [:create_breed]
-
-    test "deletes chosen breed", %{conn: conn, breed: breed} do
-      conn = delete(conn, Routes.breed_path(conn, :delete, breed))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.breed_path(conn, :show, breed))
-      end
     end
   end
 

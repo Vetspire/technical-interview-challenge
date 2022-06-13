@@ -6,7 +6,6 @@ defmodule BackendWeb.BreedController do
 
   action_fallback BackendWeb.FallbackController
 
-
   if Application.compile_env!(:backend, :environment) == :prod do
     plug :basic_env_auth when action in [:create]
 
@@ -27,7 +26,7 @@ defmodule BackendWeb.BreedController do
   @doc """
   Handle raw HTML Multi-part form uploads
 
-  Submitting without a file will crash currently.
+  Returns an error if a required key is missing.
   """
   def create(conn, %{
         "breedName" => name,
@@ -43,6 +42,20 @@ defmodule BackendWeb.BreedController do
       # |> render("show.json", breed: breed)
       |> redirect(to: "/breeds/#{breed.id}")
     end
+  end
+
+  # Ideally this error handling would be more generic and use changesets
+  # but this handles the non-React version of the form upload and avoids
+  # crashing while providing a useful error message.
+  def create(conn, params) do
+    param_keys = params |> Map.keys() |> MapSet.new()
+    required_keys = MapSet.new(~w(breedName breedDescription breedImage))
+
+    missing_keys = MapSet.difference(required_keys, param_keys) |> MapSet.to_list()
+
+    conn
+    |> put_status(422)
+    |> json(%{errors: "Missing required params: #{missing_keys}", missing_params: missing_keys})
   end
 
   def show(conn, %{"id" => id}) do
