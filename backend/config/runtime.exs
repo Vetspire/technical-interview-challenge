@@ -1,0 +1,113 @@
+import Config
+
+# config/runtime.exs is executed for all environments, including
+# during releases. It is executed after compilation and before the
+# system starts, so it is typically used to load production configuration
+# and secrets from environment variables or elsewhere. Do not define
+# any compile-time configuration in here, as it won't be applied.
+# The block below contains prod specific runtime configuration.
+
+# Start the phoenix server if environment is set and running in a release
+if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
+  config :backend, BackendWeb.Endpoint, server: true
+end
+
+if config_env() == :prod do
+  database_path =
+    System.get_env("DATABASE_PATH") ||
+      raise """
+      environment variable DATABASE_PATH is missing.
+      For example: /etc/backend/backend.db
+      """
+
+  config :backend, Backend.Repo,
+    database: database_path,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+
+  # The secret key base is used to sign/encrypt cookies and other secrets.
+  # A default value is used in config/dev.exs and config/test.exs but you
+  # want to use a different value for prod and you most likely don't want
+  # to check this value into version control, so we use an environment
+  # variable instead.
+  secret_key_base =
+    System.get_env("SECRET_KEY_BASE") ||
+      raise """
+      environment variable SECRET_KEY_BASE is missing.
+      You can generate one by calling: mix phx.gen.secret
+      """
+
+  host = System.get_env("PHX_HOST") || "example.com"
+  port = String.to_integer(System.get_env("PORT") || "4000")
+
+  config :backend, BackendWeb.Endpoint,
+    url: [host: host, port: 443],
+    http: [
+      # Enable IPv6 and bind on all interfaces.
+      # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
+      # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
+      # for details about using IPv6 vs IPv4 and loopback vs public addresses.
+      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      port: port
+    ],
+    secret_key_base: secret_key_base
+
+  # ## Using releases
+  #
+  # If you are doing OTP releases, you need to instruct Phoenix
+  # to start each relevant endpoint:
+  #
+  #     config :backend, BackendWeb.Endpoint, server: true
+  #
+  # Then you can assemble a release by calling `mix release`.
+  # See `mix help release` for more information.
+end
+
+#########################################
+# Configure Cloudflare R2 Bucket Access #
+#########################################
+r2_account_id = System.get_env("R2_ACCOUNT_ID")
+r2_access_key_id = System.get_env("R2_ACCESS_KEY_ID")
+r2_secret_access_key = System.get_env("R2_SECRET_ACCESS_KEY")
+r2_bucket_name = System.get_env("R2_BUCKET_NAME")
+r2_query_secret = System.get_env("R2_QUERY_SECRET")
+
+r2_error_msg =
+  if nil in [
+       r2_account_id,
+       r2_access_key_id,
+       r2_secret_access_key,
+       r2_bucket_name,
+       r2_query_secret
+     ],
+     do: """
+     Runtime Config error. \
+     Missing required environment variable from: \
+     R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_QUERY_SECRET
+     """
+
+# In prod R2 will be the default uploader.
+# Will crash if a required environment variable is missing.
+if config_env() == :prod do
+  if r2_error_msg, do: raise(r2_error_msg)
+end
+
+if config_env() == :dev do
+  require Logger
+  if r2_error_msg, do: Logger.warn(r2_error_msg)
+end
+
+cloudflare_r2_scheme = "https://"
+cloudflare_r2_host = "#{r2_account_id}.r2.cloudflarestorage.com"
+
+config :backend, BackendWeb.Uploaders.R2Uploader,
+  bucket: r2_bucket_name,
+  query_secret: r2_query_secret,
+  endpoint: "https://dogonomicon-worker.jakeprem.workers.dev"
+
+config :ex_aws,
+  access_key_id: r2_access_key_id,
+  secret_access_key: r2_secret_access_key
+
+config :ex_aws, :s3,
+  scheme: cloudflare_r2_scheme,
+  host: cloudflare_r2_host

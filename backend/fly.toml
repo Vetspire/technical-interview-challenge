@@ -1,0 +1,53 @@
+# fly.toml file generated for dogonomicon on 2022-06-13T00:17:45-04:00
+
+# Helpful info for deploying with SQLite
+# https://gist.github.com/mcrumm/98059439c673be7e0484589162a54a01
+
+app = "dogonomicon"
+kill_signal = "SIGTERM"
+kill_timeout = 5
+processes = []
+
+# [deploy]
+#   release_command = "/app/bin/migrate"
+
+[env]
+  PHX_HOST = "dogonomicon.fly.dev"
+  PORT = "8080"
+  DATABASE_PATH = "/data/dogonomicon_data/backend.prod.db"
+  R2_BUCKET_NAME = "dev-jakeprem-dogonomicon"
+  R2_ACCOUNT_ID = "ddbaca336ddafda25acaf07053ea18d1"
+
+[mounts]
+  source = "dogonomicon_data"
+  destination = "/data"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
