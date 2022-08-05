@@ -1,0 +1,16 @@
+<h1>Show Dog</h1>
+
+<ul>
+
+  <li>
+    <strong>Breed:</strong>
+    <%= @dog.breed %>
+  </li>
+  <li>
+    <%= img_tag(image_path(@dog)) %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.dog_path(@conn, :edit, @dog) %></span> |
+<span><%= link "Back", to: Routes.dog_path(@conn, :index) %></span>
