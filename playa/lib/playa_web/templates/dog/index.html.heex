@@ -1,5 +1,9 @@
 <h1>Listing Dogs</h1>
 
+<h3>ADMIN FUNCTIONS</h3>
+<%= button("Autoload Dogs", to: "/dogs/autoload") %>
+<%= button("Delete All Dogs", to: "/dogs/unload", style: "background-color: #e57171; border: #e57171;", data: [confirm: "This will delete ALL dogs. Are you sure?"]) %>
+
 <table>
   <thead>
     <tr>

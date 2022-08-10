@@ -20,6 +20,8 @@ defmodule Playa.Autoloader do
 
       {:ok, _dog} = Dogs.create_dog(dog_params)
     end)
+
+    :ok
   end
 
   @doc """
@@ -29,6 +31,8 @@ defmodule Playa.Autoloader do
     dogs = Repo.all(Dog)
 
     Enum.map(dogs, fn dog -> Dogs.delete_dog(dog) end)
+
+    :ok
   end
 
   @spec list_files() :: [String.t()]

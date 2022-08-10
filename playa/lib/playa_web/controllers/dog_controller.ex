@@ -1,6 +1,7 @@
 defmodule PlayaWeb.DogController do
   use PlayaWeb, :controller
 
+  alias Playa.Autoloader
   alias Playa.Dogs
   alias Playa.Dogs.Dog
 
@@ -62,5 +63,21 @@ defmodule PlayaWeb.DogController do
     conn
     |> put_flash(:info, "Dog deleted successfully.")
     |> redirect(to: Routes.dog_path(conn, :index))
+  end
+
+  def autoload(conn, _) do
+    with :ok <- Autoloader.autoload() do
+      conn
+      |> put_flash(:info, "Dogs autoloaded successfully")
+      |> redirect(to: Routes.dog_path(conn, :index))
+    end
+  end
+
+  def unload(conn, _) do
+    with :ok <- Autoloader.unload!() do
+      conn
+      |> put_flash(:info, "All Dogs have gone to heaven")
+      |> redirect(to: Routes.dog_path(conn, :index))
+    end
   end
 end

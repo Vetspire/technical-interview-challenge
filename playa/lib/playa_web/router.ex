@@ -20,6 +20,8 @@ defmodule PlayaWeb.Router do
     get("/", DogController, :index)
 
     resources("/dogs", DogController)
+    post "/dogs/autoload", DogController, :autoload
+    post "/dogs/unload", DogController, :unload
   end
 
   # Other scopes may use custom stacks.
