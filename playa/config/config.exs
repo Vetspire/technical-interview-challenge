@@ -50,7 +50,7 @@ config :phoenix, :json_library, Jason
 config :ex_aws,
   region: "us-east-2",
   access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
-  secret_access_key: {:system, "AWS_SECRET_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"},
   bucket_name: System.get_env("AWS_BUCKET_NAME"),
   base_url: System.get_env("AWS_BASE_URL")
 

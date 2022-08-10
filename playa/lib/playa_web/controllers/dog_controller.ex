@@ -3,7 +3,7 @@ defmodule PlayaWeb.DogController do
 
   alias Playa.Dogs
   alias Playa.Dogs.Dog
-  alias Playa.ImageUploader
+  alias Playa.S3
 
   def index(conn, _params) do
     dogs = Dogs.list_dogs()
@@ -16,8 +16,8 @@ defmodule PlayaWeb.DogController do
   end
 
   def create(conn, %{"dog" => dog_params}) do
-    with {:ok, image_path} <- ImageUploader.upload_image(dog_params),
-         {:ok, dog_params} <- ImageUploader.add_image_path_to_params(dog_params, image_path),
+    with {:ok, image_path} <- S3.upload_image(dog_params),
+         {:ok, dog_params} <- add_image_path_to_params(dog_params, image_path),
          {:ok, dog} <- Dogs.create_dog(dog_params) do
       conn
       |> put_flash(:info, "Dog created successfully.")
@@ -58,10 +58,28 @@ defmodule PlayaWeb.DogController do
 
   def delete(conn, %{"id" => id}) do
     dog = Dogs.get_dog!(id)
-    {:ok, _dog} = Dogs.delete_dog(dog)
+
+    case S3.delete_image(dog.image_path) do
+      :ok ->
+        {:ok, _dog} = Dogs.delete_dog(dog)
+
+        conn
+        |> put_flash(:info, "Dog deleted successfully.")
+        |> redirect(to: Routes.dog_path(conn, :index))
+
+      _ ->
+        conn
+        |> put_flash(:error, "There was a problem deleting your dog")
+        |> redirect(to: Routes.dog_path(conn, :show, dog))
+    end
 
     conn
     |> put_flash(:info, "Dog deleted successfully.")
     |> redirect(to: Routes.dog_path(conn, :index))
+  end
+
+  defp add_image_path_to_params(params, image_path) do
+    params = Map.put(params, "image_path", image_path)
+    {:ok, params}
   end
 end

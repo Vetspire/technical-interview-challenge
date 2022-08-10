@@ -63,6 +63,10 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :ex_aws,
+    bucket_name: System.fetch_env!("AWS_BUCKET_NAME"),
+    base_url: System.fetch_env!("AWS_BASE_URL")
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
