@@ -2,11 +2,11 @@ defmodule Playa.Dogs do
   @moduledoc """
   The Dogs context.
   """
+  alias Playa.Dogs.Dog
+  alias Playa.Repo
+  alias Playa.S3
 
   import Ecto.Query, warn: false
-  alias Playa.Repo
-
-  alias Playa.Dogs.Dog
 
   @doc """
   Returns the list of dogs.
@@ -50,9 +50,12 @@ defmodule Playa.Dogs do
 
   """
   def create_dog(attrs \\ %{}) do
-    %Dog{}
-    |> Dog.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, image_path} <- S3.upload_image(attrs),
+         {:ok, attrs} <- add_image_path_to_params(attrs, image_path) do
+      %Dog{}
+      |> Dog.changeset(attrs)
+      |> Repo.insert()
+    end
   end
 
   @doc """
@@ -100,5 +103,10 @@ defmodule Playa.Dogs do
   """
   def change_dog(%Dog{} = dog, attrs \\ %{}) do
     Dog.changeset(dog, attrs)
+  end
+
+  defp add_image_path_to_params(params, image_path) do
+    params = Map.put(params, "image_path", image_path)
+    {:ok, params}
   end
 end

@@ -11,7 +11,8 @@ defmodule Playa.DogsFixtures do
     {:ok, dog} =
       attrs
       |> Enum.into(%{
-        breed: "some breed"
+        breed: "some breed",
+        photo: %{filename: "filename", path: "path/to/some/file"}
       })
       |> Playa.Dogs.create_dog()
 

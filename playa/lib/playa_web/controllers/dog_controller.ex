@@ -18,24 +18,15 @@ defmodule PlayaWeb.DogController do
   end
 
   def create(conn, %{"dog" => dog_params}) do
-    with {:ok, image_path} <- S3.upload_image(dog_params),
-         {:ok, dog_params} <- add_image_path_to_params(dog_params, image_path),
-         {:ok, dog} <- Dogs.create_dog(dog_params) do
-      conn
-      |> put_flash(:info, "Dog created successfully")
-      |> redirect(to: Routes.dog_path(conn, :show, dog))
-    else
+    case Dogs.create_dog(dog_params) do
+      {:ok, dog} ->
+        conn
+        |> put_flash(:info, "Dog created successfully")
+        |> redirect(to: Routes.dog_path(conn, :show, dog))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:error, "There was an issue with creating your dog")
-        |> render("new.html", changeset: changeset)
-
-      {:error, reason} ->
-        Logger.log(:warn, "Something went wrong with dog creation: #{inspect(reason)}")
-        changeset = Dogs.change_dog(%Dog{})
-
-        conn
-        |> put_flash(:error, "There was an unexpected issue with creating your dog")
         |> render("new.html", changeset: changeset)
     end
   end
@@ -85,10 +76,5 @@ defmodule PlayaWeb.DogController do
     conn
     |> put_flash(:info, "Dog deleted successfully.")
     |> redirect(to: Routes.dog_path(conn, :index))
-  end
-
-  defp add_image_path_to_params(params, image_path) do
-    params = Map.put(params, "image_path", image_path)
-    {:ok, params}
   end
 end
