@@ -3,7 +3,6 @@ defmodule PlayaWeb.DogController do
 
   alias Playa.Dogs
   alias Playa.Dogs.Dog
-  alias Playa.S3
 
   require Logger
 
@@ -58,20 +57,7 @@ defmodule PlayaWeb.DogController do
 
   def delete(conn, %{"id" => id}) do
     dog = Dogs.get_dog!(id)
-
-    case S3.delete_image(dog.image_path) do
-      :ok ->
-        {:ok, _dog} = Dogs.delete_dog(dog)
-
-        conn
-        |> put_flash(:info, "Dog deleted successfully.")
-        |> redirect(to: Routes.dog_path(conn, :index))
-
-      _ ->
-        conn
-        |> put_flash(:error, "There was a problem deleting your dog")
-        |> redirect(to: Routes.dog_path(conn, :show, dog))
-    end
+    {:ok, _dog} = Dogs.delete_dog(dog)
 
     conn
     |> put_flash(:info, "Dog deleted successfully.")

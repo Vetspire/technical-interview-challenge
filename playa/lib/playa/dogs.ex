@@ -89,7 +89,9 @@ defmodule Playa.Dogs do
 
   """
   def delete_dog(%Dog{} = dog) do
-    Repo.delete(dog)
+    with :ok <- S3.delete_image(dog.image_path) do
+      Repo.delete(dog)
+    end
   end
 
   @doc """
