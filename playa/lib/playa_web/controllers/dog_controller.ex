@@ -5,6 +5,8 @@ defmodule PlayaWeb.DogController do
   alias Playa.Dogs.Dog
   alias Playa.S3
 
+  require Logger
+
   def index(conn, _params) do
     dogs = Dogs.list_dogs()
     render(conn, "index.html", dogs: dogs)
@@ -20,14 +22,21 @@ defmodule PlayaWeb.DogController do
          {:ok, dog_params} <- add_image_path_to_params(dog_params, image_path),
          {:ok, dog} <- Dogs.create_dog(dog_params) do
       conn
-      |> put_flash(:info, "Dog created successfully.")
+      |> put_flash(:info, "Dog created successfully")
       |> redirect(to: Routes.dog_path(conn, :show, dog))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:error, "There was an issue with creating your dog")
+        |> render("new.html", changeset: changeset)
 
       {:error, reason} ->
-        {:error, reason}
+        Logger.log(:warn, "Something went wrong with dog creation: #{inspect(reason)}")
+        changeset = Dogs.change_dog(%Dog{})
+
+        conn
+        |> put_flash(:error, "There was an unexpected issue with creating your dog")
+        |> render("new.html", changeset: changeset)
     end
   end
 
