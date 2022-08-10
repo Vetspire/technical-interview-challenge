@@ -12,7 +12,7 @@ defmodule Playa.S3 do
     end
   end
 
-  @spec upload_image(Map.t()) :: {:ok, String.t()} | {:error, term()}
+  @spec upload_image(map) :: {:ok, String.t()} | {:error, term()}
   def upload_image(%{"photo" => photo}) do
     image = File.read!(photo.path)
 
@@ -26,7 +26,7 @@ defmodule Playa.S3 do
     end
   end
 
-  @spec delete_image(String.t()) :: {:ok, String.t()} | {:error, term()}
+  @spec delete_image(String.t()) :: :ok | {:error, term()}
   def delete_image(filename) do
     response =
       ExAws.S3.delete_object(Config.bucket_name(), "uploads/#{filename}") |> ExAws.request()

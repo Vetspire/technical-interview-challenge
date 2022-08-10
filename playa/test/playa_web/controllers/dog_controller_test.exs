@@ -3,7 +3,6 @@ defmodule PlayaWeb.DogControllerTest do
 
   import Playa.DogsFixtures
 
-  @create_attrs %{breed: "some breed"}
   @update_attrs %{breed: "some updated breed"}
   @invalid_attrs %{breed: nil}
 
@@ -17,23 +16,6 @@ defmodule PlayaWeb.DogControllerTest do
   describe "new dog" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.dog_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Dog"
-    end
-  end
-
-  describe "create dog" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.dog_path(conn, :create), dog: @create_attrs)
-
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.dog_path(conn, :show, id)
-
-      conn = get(conn, Routes.dog_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Dog"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.dog_path(conn, :create), dog: @invalid_attrs)
       assert html_response(conn, 200) =~ "New Dog"
     end
   end

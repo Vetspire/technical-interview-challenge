@@ -33,14 +33,14 @@ defmodule Playa.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ecto_sql, "~> 3.6"},
-      {:hackney, "~> 1.9"},
-      {:sweet_xml, "~> 0.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.18"},
+      {:hackney, "~> 1.9"},
       {:jason, "~> 1.2"},
       {:phoenix, "~> 1.6.11"},
       {:phoenix_ecto, "~> 4.4"},
@@ -50,6 +50,7 @@ defmodule Playa.MixProject do
       {:phoenix_live_view, "~> 0.17.5"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
+      {:sweet_xml, "~> 0.6"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
