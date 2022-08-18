@@ -19,7 +19,11 @@ For the front-end, there are 3 pages at `VetspireInterviewWeb.Dogs` that are con
 - ShowLive: Shows the dog breed and it's picture with a link to return to the index.
 - NewLive: A form for creating a new dog by specifying breed and uploading an optional image.
 
-For the sake of simplicity for this exercise, images are saved to and read from `priv/static/images/dogs`.
+To keep things simple and keep focus on completing and testing the features fully, the UX/styles are largely
+unchanged from the boilerplate CSS rules given when initializing a new Phoenix project. However, with more time to
+focus on the UI I'd have brought in TailwindCSS which has been my preferred styling framework lately.
+
+Also for the sake of simplicity, images are saved to and read from `priv/static/images/dogs`.
 Dog `image_path` fields are saved as the filename contained within this path. For a more "production-ready" solution or one
 that involved a separate frontend that uploads images, I'd probably store the images on S3 instead of handling it locally.
 
