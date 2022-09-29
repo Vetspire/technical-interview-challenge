@@ -16,4 +16,4 @@ WORKDIR /app
 COPY . /app
 
 # Compile application
-RUN mix do phx.digest, compile
+RUN mix do deps.get, phx.digest, compile
