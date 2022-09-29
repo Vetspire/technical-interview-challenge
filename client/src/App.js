@@ -46,6 +46,7 @@ function BreedsList() {
 
   return (
     <div>
+      <h3>Breeds</h3>
       <ul>
       {data.breeds.map(({ id, name }) => (
         <li key={id}>
@@ -102,12 +103,12 @@ function BreedUpload() {
     <div>
       <h3>Add a new breed</h3>
       <form onSubmit={onSubmit}>
-        <label for="name">Name</label>
+        <label htmlFor="name">Name</label>
         <br />
         <input type="text" required name="name" value={name} onChange={data => setName(data.target.value)} ></input>
         <br />
         <br />
-        <label for="image">Image</label>
+        <label htmlFor="image">Image</label>
         <br />
         <input type="file" required name="image" onChange={onUpload} />
         <br />
