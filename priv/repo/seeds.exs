@@ -1,9 +1,13 @@
-alias VetspireChallenge.Schemas.Breed
-alias VetspireChallenge.Repo
+alias VetspireChallenge.Upload
 
-breeds =
-  Path.wildcard("images/*")
-  |> Enum.map(&Path.basename/1)
-  |> Enum.map(&%{name: Path.rootname(&1) |> Base.decode32!(), image: &1})
+Path.wildcard("images/*")
+|> Enum.map(fn path ->
+  name = Path.basename(path) |> Path.rootname()
+  ext = Path.extname(path)
 
-Repo.insert_all(Breed, breeds, on_conflict: :nothing, conflict_target: [:name])
+  Upload.new_breed(name, path, ext)
+end)
+|> Enum.each(fn
+  {:ok, breed} -> IO.puts("Inserted #{breed.name}")
+  {:error, reason} -> IO.puts(reason)
+end)
