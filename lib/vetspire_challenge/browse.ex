@@ -15,6 +15,10 @@ defmodule VetspireChallenge.Browse do
     |> Repo.all()
   end
 
+  def get_breed(id) do
+    Repo.get(Breed, id)
+  end
+
   defp get_pagination_args(options) do
     sort = Map.get(options, :sort, "asc") |> String.downcase() |> normalize_sort()
     limit = Map.get(options, :limit, 100) |> normalize_limit()
