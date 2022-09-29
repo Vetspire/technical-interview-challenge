@@ -1,28 +1,39 @@
 version: '3.2'
 services:
   db:
-    container_name: vetspire-challenge-postgres
+    container_name: vetspire-challenge-db
     image: postgres:14.5
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
 
-  web:
-    container_name: vetsprite-challenge-app
+  api:
+    container_name: vetsprite-challenge-api
     build: .
     volumes:
       - type: volume
-        source: vetspire-challenge-postgres-data
+        source: vetspire-challenge-db-data
         target: /var/lib/postgresql/data
     ports:
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db/vetspire-db
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:-aTxdcUjOq/Kthx/upGORNhBOWU/DVjkLuxB0d0YvHAGwjFcHfyJYuD8zdXhSarOn}
+      RESET_DATABASE: ${RESET_DATABASE:-true}
     depends_on:
       - db
     command:
       - ./bin/run.sh
 
+  web:
+    container_name: vetsprite-challenge-web
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      SERVER_URL: api
+    depends_on:
+      - api
+
 volumes:
-  vetspire-challenge-postgres-data:
+  vetspire-challenge-db-data:
