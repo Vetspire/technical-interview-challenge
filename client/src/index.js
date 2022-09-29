@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { createLink } from 'apollo-absinthe-upload-link';
 import { SERVER_URL } from './constants';
 
 const client = new ApolloClient({
-  uri: `${SERVER_URL}/graphql`,
+  link:  createLink({
+    uri: `${SERVER_URL}/graphql`,
+  }),
   cache: new InMemoryCache(),
 });
 
