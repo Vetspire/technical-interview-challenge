@@ -34,6 +34,7 @@ defmodule VetspireChallenge.MixProject do
   defp deps do
     [
       {:absinthe_plug, "~> 1.5"},
+      {:corsica, "~> 1.0"},
       {:phoenix, "~> 1.6.12"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
