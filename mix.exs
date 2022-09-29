@@ -33,9 +33,11 @@ defmodule VetspireChallenge.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:absinthe_plug, "~> 1.5"},
       {:phoenix, "~> 1.6.12"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
+      {:poison, "~> 5.0"},
       {:postgrex, ">= 0.0.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},

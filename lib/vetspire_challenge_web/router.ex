@@ -8,4 +8,13 @@ defmodule VetspireChallengeWeb.Router do
   scope "/api", VetspireChallengeWeb do
     pipe_through :api
   end
+
+  scope "/" do
+    forward("/graphiql", Absinthe.Plug.GraphiQL,
+      schema: VetspireChallengeWeb.Schema,
+      interface: :playground,
+      context: %{pubsub: VetspireChallengeWeb.Endpoint},
+      json_codec: Poison
+    )
+  end
 end
