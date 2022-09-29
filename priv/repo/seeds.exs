@@ -1,11 +1,9 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     VetspireChallenge.Repo.insert!(%VetspireChallenge.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+alias VetspireChallenge.{Breed, Repo}
+
+breeds =
+  Path.wildcard("images/*")
+  |> Enum.map(&Path.basename/1)
+  |> Enum.map(&Path.rootname/1)
+  |> Enum.map(&%{name: Base.decode32!(&1), image: &1})
+
+Repo.insert_all(Breed, breeds, on_conflict: :nothing, conflict_target: [:name])
