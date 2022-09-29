@@ -9,7 +9,7 @@ services:
 
   api:
     container_name: vetsprite-challenge-api
-    build: .
+    build: ./server
     volumes:
       - type: volume
         source: vetspire-challenge-db-data
