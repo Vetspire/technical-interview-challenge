@@ -1,4 +1,4 @@
-defmodule VetspireChallenge.Breed do
+defmodule VetspireChallenge.Schemas.Breed do
   use Ecto.Schema
 
   import Ecto.Changeset

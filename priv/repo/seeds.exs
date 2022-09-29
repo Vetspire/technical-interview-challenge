@@ -1,4 +1,5 @@
-alias VetspireChallenge.{Breed, Repo}
+alias VetspireChallenge.Schemas.Breed
+alias VetspireChallenge.Repo
 
 breeds =
   Path.wildcard("images/*")
