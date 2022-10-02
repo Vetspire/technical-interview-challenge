@@ -5,7 +5,7 @@ defmodule ServerWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api" do
+  scope "/graphql" do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: ServerWeb.Schema
