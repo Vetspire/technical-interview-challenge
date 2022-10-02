@@ -8,4 +8,8 @@ defmodule ServerWeb.Schema do
     import_fields(:pet_queries)
     import_fields(:s3_queries)
   end
+
+  mutation do
+    import_fields(:pet_mutations)
+  end
 end

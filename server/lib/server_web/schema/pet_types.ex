@@ -17,6 +17,17 @@ defmodule ServerWeb.Schema.PetTypes do
     end
   end
 
+  object :pet_mutations do
+    @desc "Create dog"
+    field :create_dog, :dog do
+      arg(:breed, non_null(:string))
+      arg(:description, non_null(:string))
+      arg(:filename, non_null(:string))
+
+      resolve(&Resolvers.Pets.create_dog/2)
+    end
+  end
+
   object :dog do
     field :uid, :id
     field :breed, :string

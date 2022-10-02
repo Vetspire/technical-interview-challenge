@@ -36,4 +36,22 @@ defmodule Server.Pets do
 
   """
   def get_dog!(breed), do: Repo.get_by!(Dog, breed: breed)
+
+  @doc """
+  Creates a dog.
+
+  ## Examples
+
+      iex> create_dog(%{field: value})
+      {:ok, %Dog{}}
+
+      iex> create_dog(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_dog(attrs \\ %{}) do
+    %Dog{}
+    |> Dog.create_changeset(attrs)
+    |> Repo.insert()
+  end
 end

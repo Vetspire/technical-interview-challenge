@@ -1,6 +1,10 @@
 defmodule ServerWeb.Schema.PetTypesTest do
   use ServerWeb.ConnCase, async: true
 
+  import Mox
+
+  setup :verify_on_exit!
+
   @dogs_query """
   query {
     dogs {
@@ -15,6 +19,17 @@ defmodule ServerWeb.Schema.PetTypesTest do
   @dog_query """
   query dog($breed: String!){
     dog(breed: $breed) {
+      uid
+      breed
+      description
+      image_url
+    }
+  }
+  """
+
+  @create_dog_mutation """
+  mutation create_dog($breed: String!, $description: String!, $filename: String!){
+    create_dog(breed: $breed, description: $description, filename: $filename) {
       uid
       breed
       description
@@ -74,6 +89,33 @@ defmodule ServerWeb.Schema.PetTypesTest do
                  "path" => ["dog"]
                }
              ]
+    end
+  end
+
+  describe "mutation create_dog" do
+    test "success: returns dog", %{conn: conn} do
+      expect(Server.MockS3, :put_object_copy, fn "dogs/golden_retriever.jpg", _opts ->
+        {:ok, nil}
+      end)
+
+      expect(Server.MockS3, :put_object_acl, fn "dogs/golden_retriever.jpg", _opts ->
+        {:ok, nil}
+      end)
+
+      expected_breed = "golden retriever"
+
+      params = %{
+        "query" => @create_dog_mutation,
+        "variables" => %{
+          breed: expected_breed,
+          description: "about this dog",
+          filename: "golden_retriever.jpg"
+        }
+      }
+
+      %{"data" => %{"create_dog" => dog}} = conn |> post("/graphql", params) |> json_response(200)
+
+      assert dog["breed"] == expected_breed
     end
   end
 end

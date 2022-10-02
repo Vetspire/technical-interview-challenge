@@ -51,14 +51,15 @@ defmodule ServerWeb.Schema.S3TypesTest do
       } = conn |> post("/graphql", params) |> json_response(200)
 
       assert url == expected_presigned_url
+
       assert [
-        %{"key" => "Policy", "value" => "value"},
-        %{"key" => "X-Amz-Algorithm", "value" => "value"},
-        %{"key" => "X-Amz-Credential", "value" => "value"},
-        %{"key" => "X-Amz-Date", "value" => "value"},
-        %{"key" => "X-Amz-Signature", "value" => "value"},
-        %{"key" => "key", "value" => "dogs/cavapoo.png"}
-      ] == fields
+               %{"key" => "Policy", "value" => "value"},
+               %{"key" => "X-Amz-Algorithm", "value" => "value"},
+               %{"key" => "X-Amz-Credential", "value" => "value"},
+               %{"key" => "X-Amz-Date", "value" => "value"},
+               %{"key" => "X-Amz-Signature", "value" => "value"},
+               %{"key" => "key", "value" => "dogs/cavapoo.png"}
+             ] == fields
     end
   end
 end
