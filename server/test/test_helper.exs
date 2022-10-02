@@ -1,3 +1,5 @@
 ExUnit.start()
 {:ok, _} = Application.ensure_all_started(:ex_machina)
+Mox.defmock(Server.MockS3, for: Server.S3)
+Application.put_env(:server, :s3, Server.MockS3)
 Ecto.Adapters.SQL.Sandbox.mode(Server.Repo, :manual)

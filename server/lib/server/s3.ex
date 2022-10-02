@@ -3,10 +3,18 @@ defmodule Server.S3 do
   The S3 context.
   """
 
+  @callback presigned_post(String.t(), keyword()) :: map()
+  @callback upload(binary(), String.t()) :: {:ok, term} | {:error, term}
+
   @pet_types ~w(dog)
   @pet_types_to_directory %{
     "dog" => "dogs"
   }
+
+  @spec presigned_post(String.t(), keyword()) :: map()
+  def presigned_post(s3_path, opts \\ []) do
+    ExAws.Config.new(:s3) |> ExAws.S3.presigned_post(bucket(), s3_path, opts) |> IO.inspect()
+  end
 
   @spec upload(binary(), String.t()) :: {:ok, term} | {:error, term}
   def upload(content, s3_path) when is_binary(content) and is_binary(s3_path) do

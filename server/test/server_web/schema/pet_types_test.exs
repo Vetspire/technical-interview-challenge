@@ -1,5 +1,5 @@
 defmodule ServerWeb.Schema.PetTypesTest do
-  use ServerWeb.ConnCase
+  use ServerWeb.ConnCase, async: true
 
   @dogs_query """
   query {
@@ -32,7 +32,7 @@ defmodule ServerWeb.Schema.PetTypesTest do
         "query" => @dogs_query
       }
 
-      %{"data" => %{"dogs" => dogs}} = conn |> post("/api", params) |> json_response(200)
+      %{"data" => %{"dogs" => dogs}} = conn |> post("/graphql", params) |> json_response(200)
 
       assert length(dogs) == 2
 
@@ -52,7 +52,8 @@ defmodule ServerWeb.Schema.PetTypesTest do
         "variables" => %{breed: persisted_dog.breed}
       }
 
-      %{"data" => %{"dog" => fetched_dog}} = conn |> post("/api", params) |> json_response(200)
+      %{"data" => %{"dog" => fetched_dog}} =
+        conn |> post("/graphql", params) |> json_response(200)
 
       assert persisted_dog.breed == fetched_dog["breed"]
     end
@@ -64,7 +65,7 @@ defmodule ServerWeb.Schema.PetTypesTest do
         "variables" => %{breed: "golden retriever"}
       }
 
-      %{"errors" => errors} = conn |> post("/api", params) |> json_response(200)
+      %{"errors" => errors} = conn |> post("/graphql", params) |> json_response(200)
 
       assert errors == [
                %{
