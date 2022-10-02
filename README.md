@@ -32,6 +32,7 @@ decisions.
   - [GraphQL](https://graphql.org/)
   - [Amazon S3](https://aws.amazon.com/s3/)
 - Frontend:
+  - [TypeScript](https://www.typescriptlang.org/)
   - [Next.js](https://nextjs.org/)
   - [Tailwind CSS](https://tailwindcss.com/)
 
