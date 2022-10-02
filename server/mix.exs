@@ -41,6 +41,7 @@ defmodule Server.MixProject do
       {:ex_machina, "~> 2.7.0", only: :test},
       {:hackney, "~> 1.9"},
       {:jason, "~> 1.2"},
+      {:mox, "~> 1.0"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix, "~> 1.6.5"},
       {:plug_cowboy, "~> 2.5"},
