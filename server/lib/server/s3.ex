@@ -18,6 +18,11 @@ defmodule Server.S3 do
     |> ExAws.request()
   end
 
+  @spec s3_url(String.t()) :: String.t()
+  def s3_url(s3_path) when is_binary(s3_path) do
+    "https://#{bucket()}.s3.#{region()}.amazonaws.com/#{s3_path}"
+  end
+
   @spec get_s3_path(String.t(), String.t()) :: String.t()
   def get_s3_path(pet_type, filename) when pet_type in @pet_types and is_binary(filename) do
     pet_directory = pet_types_to_pet_directory(pet_type)
@@ -29,4 +34,5 @@ defmodule Server.S3 do
   end
 
   defp bucket, do: Application.fetch_env!(:server, :aws_bucket)
+  defp region, do: Application.get_env(:ex_aws, :region)
 end
