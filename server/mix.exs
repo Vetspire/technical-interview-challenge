@@ -34,12 +34,17 @@ defmodule Server.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.6"},
+      {:ex_aws_s3, "~> 2.3"},
+      {:ex_aws, "~> 2.4"},
       {:ex_machina, "~> 2.7.0", only: :test},
+      {:hackney, "~> 1.9"},
       {:jason, "~> 1.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix, "~> 1.6.5"},
       {:plug_cowboy, "~> 2.5"},
+      {:poison, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
+      {:sweet_xml, "~> 0.7.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
     ]
