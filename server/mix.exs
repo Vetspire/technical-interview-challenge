@@ -33,6 +33,8 @@ defmodule Server.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:absinthe_plug, "~> 1.5"},
+      {:absinthe, "~> 1.5"},
       {:ecto_sql, "~> 3.6"},
       {:ex_aws_s3, "~> 2.3"},
       {:ex_aws, "~> 2.4"},

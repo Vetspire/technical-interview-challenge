@@ -50,4 +50,3 @@ for image_path <- image_paths do
 
   Repo.insert!(dog)
 end
-
