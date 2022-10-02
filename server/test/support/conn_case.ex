@@ -24,6 +24,7 @@ defmodule ServerWeb.ConnCase do
       import Phoenix.ConnTest
       import ServerWeb.ConnCase
 
+      alias Server.Factory
       alias ServerWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
