@@ -18,6 +18,9 @@ defmodule Server.DataCase do
 
   using do
     quote do
+      alias Ecto.Changeset
+      alias Server.Factory
+      alias Server.Pets.Dog
       alias Server.Repo
 
       import Ecto

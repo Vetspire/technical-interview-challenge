@@ -10,6 +10,8 @@ import Config
 config :server,
   ecto_repos: [Server.Repo]
 
+config :server, Server.Repo, migration_timestamps: [type: :timestamptz]
+
 # Configures the endpoint
 config :server, ServerWeb.Endpoint,
   url: [host: "localhost"],
