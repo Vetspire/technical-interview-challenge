@@ -35,6 +35,7 @@ defmodule Server.MixProject do
     [
       {:absinthe_plug, "~> 1.5"},
       {:absinthe, "~> 1.5"},
+      {:cors_plug, "~> 3.0"},
       {:ecto_sql, "~> 3.6"},
       {:ex_aws_s3, "~> 2.3"},
       {:ex_aws, "~> 2.4"},
