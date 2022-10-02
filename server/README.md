@@ -18,4 +18,5 @@ Now enter `AWS_REGION` and `AWS_BUCKET` values into `.env`.
 6. Start Postgres in Docker Desktop `docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -d postgres`
 7. Setup database `mix ecto.setup`
 8. Source environment variables `source .env`
-9. Start server `mix phx.server`
+9. Upload `priv/repo/images` to s3 `mix upload_images`
+10. Start server `mix phx.server`
