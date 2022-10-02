@@ -96,5 +96,20 @@ defmodule Server.Pets.DogTest do
               [constraint: :unique, constraint_name: "dogs_breed_index"]} ==
                errors[:breed]
     end
+
+    test "error: return error changeset when image_url is not a valid value" do
+      attrs = Map.merge(@vaild_attrs, %{"image_url" => "placedog.net/500"})
+
+      changeset = Dog.create_changeset(%Dog{}, attrs)
+
+      assert %Changeset{valid?: false, errors: errors} = changeset
+
+      assert errors[:image_url], "The field :image_url is missing from errors"
+
+      {_, meta} = errors[:image_url]
+
+      assert meta[:validation] == :value,
+             "The validation type, #{meta[:validation]}, is incorrect"
+    end
   end
 end
