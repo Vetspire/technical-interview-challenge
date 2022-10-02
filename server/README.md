@@ -1,19 +1,8 @@
-# Server
+## Getting Started
 
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+1. [Install Brew](https://brew.sh/)
+2. Before `asdf install` follow the instruction in [asdf-erlang README.md](https://github.com/asdf-vm/asdf-erlang#osx) for your OS. If using the Apple M1 Chip here's [a good guide](https://devheroes.io/en/erlang-elixir-macos-m1/) on installing Erlang and Elixir.
+3. Set environment variables for asdf when installing erlang `export KERL_CONFIGURE_OPTIONS="--without-javac --without-wx --without-odbc --with-ssl=$(brew --prefix openssl@1.1)"`
+4. Install asdf `asdf install`
+5. Install dependencies `mix deps.get`
+6. Start server `mix phx.server`
