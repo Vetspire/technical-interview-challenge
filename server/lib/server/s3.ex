@@ -21,7 +21,7 @@ defmodule Server.S3 do
 
   @spec presigned_post(String.t(), keyword()) :: map()
   def presigned_post(s3_path, opts \\ []) do
-    ExAws.Config.new(:s3) |> ExAws.S3.presigned_post(bucket(), s3_path, opts) |> IO.inspect()
+    ExAws.Config.new(:s3) |> ExAws.S3.presigned_post(bucket(), s3_path, opts)
   end
 
   @spec put_object_copy(String.t(), keyword()) :: {:ok, term} | {:error, term}

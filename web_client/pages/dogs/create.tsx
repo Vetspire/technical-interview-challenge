@@ -3,13 +3,14 @@ import classNames from "classnames";
 import type { ChangeEvent } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import client from "clients/graphql/graphqlClient";
 import CREATE_DOG_MUTATION from "clients/graphql/mutations/createDog";
 import S3_PRESIGNED_URL_QUERY from "clients/graphql/queries/s3PresignedUrlQuery";
 import pathTo from "utils/pathTo";
 
-const DogPage: NextPage = () => {
+const CreateDogPage: NextPage = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const inputBreedEl = useRef<HTMLInputElement | null>(null);
   const inputDescriptionEl = useRef<HTMLTextAreaElement | null>(null);
@@ -74,6 +75,9 @@ const DogPage: NextPage = () => {
 
   return (
     <main className="flex flex-col max-w-sm mx-auto my-4">
+      <Link href={pathTo.home}>
+        <span className="underline cursor-pointer">Back</span>
+      </Link>
       <h3 className="text-2xl mb-2">Create new dog breed</h3>
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <label className="my-2" htmlFor="breed">
@@ -119,4 +123,4 @@ const DogPage: NextPage = () => {
   );
 };
 
-export default DogPage;
+export default CreateDogPage;
