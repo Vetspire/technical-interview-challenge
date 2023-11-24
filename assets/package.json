@@ -1,0 +1,21 @@
+{
+  "name": "vetspire-take-home",
+  "version": "0.1.0",
+  "description": "The front-end to the Vetspire take home challenge",
+  "main": "js/app.jsx",
+  "scripts": {
+    "format": "npx prettier . --write",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@apollo/client": "^3.8.7",
+    "graphql": "^16.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  }
+}

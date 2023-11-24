@@ -1,0 +1,9 @@
+.breed-box {
+  text-align: center;
+}
+
+.breed-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
