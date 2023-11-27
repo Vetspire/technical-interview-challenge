@@ -5,11 +5,24 @@ defmodule VetspireTakeHomeWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   scope "/api" do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: VetspireTakeHomeWeb.Schema
     forward "/", Absinthe.Plug, schema: VetspireTakeHomeWeb.Schema
+  end
+
+  scope "/", VetspireTakeHomeWeb do
+    pipe_through :browser
+
+    get "/", PageController, :home
   end
 
   # Enable LiveDashboard in development
