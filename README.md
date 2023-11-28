@@ -9,6 +9,12 @@ I am using the following language versions:
 
 If you are using ASDF and have the requisite plugins installed, you can install these versions by `cd`ing into wherever you've cloned this project and running `asdf install`.
 
+Rationale for language/framework choices:
+- Elixir: Used by Vetspire.  Also the language I'm most familiar with.
+- Phoenix/Absinthe: Same as above.
+- React/Apollo: Same as above.
+- JavaScript vs TypeScript: I used plain JavaScript because I'm not especially familiar with TypeScript, and it's been rather annoying in the past.
+
 ## Running the Application
 
 To start your Phoenix server:
