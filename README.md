@@ -2,6 +2,9 @@
 
 The dog breed selector repository. In this project there are two main directories, the frontend and the backend. Below you will find a bit more detail about each. 
 
+### Running the application locally
+From the main directory of the checked out branch, run `npm start` and the node server and react client will start up. You may need to resolve dependencies depending on your current local environment. From there, navigate to http://localhost:3000 via your browser of choice to view the webpage. 
+
 ### Features
 - Backend API that serves:
     - A list of available dog breeds based on those available in `/images`
