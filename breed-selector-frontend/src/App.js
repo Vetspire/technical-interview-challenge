@@ -16,17 +16,15 @@ const BreedSelector = () => {
         }
 
         const data = await response.json();
-        console.log(data)
         setBreedList(data.breedList);
-        console.log(typeof(breedList));
 
         // Set the selected value to the first breed in the list by default
         if (data.breedList.length > 0) {
           setSelectedValue(data.breedList[0]);
         }
       } catch (error) {
-        console.error('Error fetching images list:', error);
-        setError('Failed to fetch images list. Please try again.');
+        console.error('Error fetching breed list:', error);
+        setError('Failed to fetch breed list. Please try again.');
       }
     };
 
