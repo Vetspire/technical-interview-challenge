@@ -1,4 +1,9 @@
 defmodule DogBreedsWeb.Telemetry do
+  @moduledoc """
+  Phoenix's Telemetry implementation
+  https://hexdocs.pm/phoenix/telemetry.html
+  """
+
   use Supervisor
   import Telemetry.Metrics
 

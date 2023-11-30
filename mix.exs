@@ -32,6 +32,7 @@ defmodule DogBreeds.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # installed by Phoenix
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -47,7 +48,11 @@ defmodule DogBreeds.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+
+      # Installed by us
+
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -63,6 +68,7 @@ defmodule DogBreeds.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      lint: ["format", "credo --strict"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
