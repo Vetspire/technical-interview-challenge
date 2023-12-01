@@ -1,11 +1,26 @@
 import { describe, test } from "@jest/globals";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
+import * as Api from "../services/api";
+import * as BreedHandlers from "../test/handlers/breeds";
 
 import App from "./App";
 
 describe("<App />", () => {
-  test("renders", () => {
+  test("renders", async () => {
+    jest
+      .spyOn(Api, "get")
+      .mockImplementationOnce(() => Promise.resolve(BreedHandlers.MOCK_BREEDS));
     render(<App />);
-    expect(screen.getByText("App")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole("option", { name: "Select a breed:", selected: true }),
+      ).toBeVisible(),
+    );
+
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: 1 } });
+    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 });
