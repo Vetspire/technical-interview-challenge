@@ -1,4 +1,4 @@
-defmodule DogBreedsWeb.CoreComponents do
+defmodule LinnaeusWeb.CoreComponents do
   @moduledoc """
   Provides core UI components.
 
@@ -21,7 +21,7 @@ defmodule DogBreedsWeb.CoreComponents do
     LiveView.JS
   }
 
-  import DogBreedsWeb.Gettext
+  import LinnaeusWeb.Gettext
 
   @doc """
   Renders a modal.
@@ -663,9 +663,9 @@ defmodule DogBreedsWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(DogBreedsWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(LinnaeusWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(DogBreedsWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(LinnaeusWeb.Gettext, "errors", msg, opts)
     end
   end
 

@@ -7,19 +7,19 @@
 # General application configuration
 import Config
 
-config :dog_breeds,
-  ecto_repos: [DogBreeds.Repo],
+config :linnaeus,
+  ecto_repos: [Linnaeus.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :dog_breeds, DogBreedsWeb.Endpoint,
+config :linnaeus, LinnaeusWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
-    formats: [html: DogBreedsWeb.ErrorHTML, json: DogBreedsWeb.ErrorJSON],
+    formats: [html: LinnaeusWeb.ErrorHTML, json: LinnaeusWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: DogBreeds.PubSub,
+  pubsub_server: Linnaeus.PubSub,
   live_view: [signing_salt: "O9F3oR9n"]
 
 # Configure esbuild (the version is required)

@@ -5,17 +5,17 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :dog_breeds, DogBreeds.Repo,
+config :linnaeus, Linnaeus.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "dog_breeds_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "linnaeus_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :dog_breeds, DogBreedsWeb.Endpoint,
+config :linnaeus, LinnaeusWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "ZWzhGgITATA+ptxmo7iUUbx3Za9+Q1L5js6/GPBfAzHPFGa1LcZwFqIDq4259Z5d",
   server: false

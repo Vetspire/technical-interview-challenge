@@ -1,12 +1,12 @@
-defmodule DogBreedsWeb do
+defmodule LinnaeusWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use DogBreedsWeb, :controller
-      use DogBreedsWeb, :html
+      use LinnaeusWeb, :controller
+      use LinnaeusWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,10 +40,10 @@ defmodule DogBreedsWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: DogBreedsWeb.Layouts]
+        layouts: [html: LinnaeusWeb.Layouts]
 
       import Plug.Conn
-      import DogBreedsWeb.Gettext
+      import LinnaeusWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +52,7 @@ defmodule DogBreedsWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {DogBreedsWeb.Layouts, :app}
+        layout: {LinnaeusWeb.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +84,8 @@ defmodule DogBreedsWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import DogBreedsWeb.CoreComponents
-      import DogBreedsWeb.Gettext
+      import LinnaeusWeb.CoreComponents
+      import LinnaeusWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,9 +98,9 @@ defmodule DogBreedsWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: DogBreedsWeb.Endpoint,
-        router: DogBreedsWeb.Router,
-        statics: DogBreedsWeb.static_paths()
+        endpoint: LinnaeusWeb.Endpoint,
+        router: LinnaeusWeb.Router,
+        statics: LinnaeusWeb.static_paths()
     end
   end
 

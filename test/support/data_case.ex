@@ -1,4 +1,4 @@
-defmodule DogBreeds.DataCase do
+defmodule Linnaeus.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule DogBreeds.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use DogBreeds.DataCase, async: true`, although
+  by setting `use Linnaeus.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -19,7 +19,7 @@ defmodule DogBreeds.DataCase do
 
   using do
     quote do
-      alias DogBreeds.{
+      alias Linnaeus.{
         DataCase,
         Repo
       }
@@ -27,7 +27,7 @@ defmodule DogBreeds.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import DogBreeds.DataCase
+      import Linnaeus.DataCase
     end
   end
 
@@ -40,7 +40,7 @@ defmodule DogBreeds.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Sandbox.start_owner!(DogBreeds.Repo, shared: not tags[:async])
+    pid = Sandbox.start_owner!(Linnaeus.Repo, shared: not tags[:async])
     on_exit(fn -> Sandbox.stop_owner(pid) end)
   end
 

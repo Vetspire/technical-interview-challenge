@@ -1,7 +1,7 @@
-defmodule DogBreedsWeb.Api.V1.BreedsController do
-  use DogBreedsWeb, :controller
+defmodule LinnaeusWeb.Api.V1.BreedsController do
+  use LinnaeusWeb, :controller
 
-  @breeds [:code.priv_dir(:dog_breeds), "static", "images", "dogs"]
+  @breeds [:code.priv_dir(:linnaeus), "static", "images", "dogs"]
           |> Path.join()
           |> File.ls!()
           |> Enum.with_index()

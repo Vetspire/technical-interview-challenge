@@ -1,4 +1,4 @@
-defmodule DogBreedsWeb.Telemetry do
+defmodule LinnaeusWeb.Telemetry do
   @moduledoc """
   Phoenix's Telemetry implementation
   https://hexdocs.pm/phoenix/telemetry.html
@@ -57,23 +57,23 @@ defmodule DogBreedsWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("dog_breeds.repo.query.total_time",
+      summary("linnaeus.repo.query.total_time",
         unit: {:native, :millisecond},
         description: "The sum of the other measurements"
       ),
-      summary("dog_breeds.repo.query.decode_time",
+      summary("linnaeus.repo.query.decode_time",
         unit: {:native, :millisecond},
         description: "The time spent decoding the data received from the database"
       ),
-      summary("dog_breeds.repo.query.query_time",
+      summary("linnaeus.repo.query.query_time",
         unit: {:native, :millisecond},
         description: "The time spent executing the query"
       ),
-      summary("dog_breeds.repo.query.queue_time",
+      summary("linnaeus.repo.query.queue_time",
         unit: {:native, :millisecond},
         description: "The time spent waiting for a database connection"
       ),
-      summary("dog_breeds.repo.query.idle_time",
+      summary("linnaeus.repo.query.idle_time",
         unit: {:native, :millisecond},
         description:
           "The time the connection spent waiting before being checked out for the query"
@@ -91,7 +91,7 @@ defmodule DogBreedsWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {DogBreedsWeb, :count_users, []}
+      # {LinnaeusWeb, :count_users, []}
     ]
   end
 end

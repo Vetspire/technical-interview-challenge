@@ -1,5 +1,5 @@
-defmodule DogBreeds.Repo do
+defmodule Linnaeus.Repo do
   use Ecto.Repo,
-    otp_app: :dog_breeds,
+    otp_app: :linnaeus,
     adapter: Ecto.Adapters.Postgres
 end

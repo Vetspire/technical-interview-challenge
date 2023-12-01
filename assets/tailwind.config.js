@@ -9,8 +9,8 @@ const plugin = require("tailwindcss/plugin");
 module.exports = {
   content: [
     "./js/**/*.js",
-    "../lib/dog_breeds_web.ex",
-    "../lib/dog_breeds_web/**/*.*ex",
+    "../lib/linnaeus_web.ex",
+    "../lib/linnaeus_web/**/*.*ex",
   ],
   theme: {
     extend: {
@@ -27,28 +27,25 @@ module.exports = {
     //     <div class="phx-click-loading:animate-ping">
     //
     plugin(({ addVariant }) =>
-      addVariant("phx-no-feedback", [
-        ".phx-no-feedback&",
-        ".phx-no-feedback &",
-      ]),
+      addVariant("phx-no-feedback", [".phx-no-feedback&", ".phx-no-feedback &"])
     ),
     plugin(({ addVariant }) =>
       addVariant("phx-click-loading", [
         ".phx-click-loading&",
         ".phx-click-loading &",
-      ]),
+      ])
     ),
     plugin(({ addVariant }) =>
       addVariant("phx-submit-loading", [
         ".phx-submit-loading&",
         ".phx-submit-loading &",
-      ]),
+      ])
     ),
     plugin(({ addVariant }) =>
       addVariant("phx-change-loading", [
         ".phx-change-loading&",
         ".phx-change-loading &",
-      ]),
+      ])
     ),
 
     // Embeds Heroicons (https://heroicons.com) into your app.css bundle
@@ -88,7 +85,7 @@ module.exports = {
             };
           },
         },
-        { values },
+        { values }
       );
     }),
   ],

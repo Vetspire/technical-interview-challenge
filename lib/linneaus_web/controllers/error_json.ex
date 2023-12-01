@@ -1,4 +1,4 @@
-defmodule DogBreedsWeb.ErrorJSON do
+defmodule LinnaeusWeb.ErrorJSON do
   # If you want to customize a particular status code,
   # you may add your own clauses, such as:
   #

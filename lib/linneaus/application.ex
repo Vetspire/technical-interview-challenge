@@ -1,4 +1,4 @@
-defmodule DogBreeds.Application do
+defmodule Linnaeus.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,19 +8,19 @@ defmodule DogBreeds.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      DogBreedsWeb.Telemetry,
-      DogBreeds.Repo,
-      {DNSCluster, query: Application.get_env(:dog_breeds, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: DogBreeds.PubSub},
-      # Start a worker by calling: DogBreeds.Worker.start_link(arg)
-      # {DogBreeds.Worker, arg},
+      LinnaeusWeb.Telemetry,
+      Linnaeus.Repo,
+      {DNSCluster, query: Application.get_env(:linnaeus, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Linnaeus.PubSub},
+      # Start a worker by calling: Linnaeus.Worker.start_link(arg)
+      # {Linnaeus.Worker, arg},
       # Start to serve requests, typically the last entry
-      DogBreedsWeb.Endpoint
+      LinnaeusWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: DogBreeds.Supervisor]
+    opts = [strategy: :one_for_one, name: Linnaeus.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -28,7 +28,7 @@ defmodule DogBreeds.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    DogBreedsWeb.Endpoint.config_change(changed, removed)
+    LinnaeusWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -1,5 +1,5 @@
-defmodule DogBreedsWeb.PageControllerTest do
-  use DogBreedsWeb.ConnCase
+defmodule LinnaeusWeb.PageControllerTest do
+  use LinnaeusWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

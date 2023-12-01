@@ -1,12 +1,12 @@
-defmodule DogBreedsWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :dog_breeds
+defmodule LinnaeusWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :linnaeus
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_dog_breeds_key",
+    key: "_linnaeus_key",
     signing_salt: "pJxW4HHK",
     same_site: "Lax"
   ]
@@ -19,9 +19,9 @@ defmodule DogBreedsWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :dog_breeds,
+    from: :linnaeus,
     gzip: false,
-    only: DogBreedsWeb.static_paths()
+    only: LinnaeusWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -29,7 +29,7 @@ defmodule DogBreedsWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :dog_breeds
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :linnaeus
   end
 
   plug Plug.RequestId
@@ -43,5 +43,5 @@ defmodule DogBreedsWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug DogBreedsWeb.Router
+  plug LinnaeusWeb.Router
 end

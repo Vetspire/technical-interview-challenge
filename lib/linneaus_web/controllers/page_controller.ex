@@ -1,5 +1,5 @@
-defmodule DogBreedsWeb.PageController do
-  use DogBreedsWeb, :controller
+defmodule LinnaeusWeb.PageController do
+  use LinnaeusWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

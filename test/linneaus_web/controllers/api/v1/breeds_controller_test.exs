@@ -1,5 +1,5 @@
-defmodule DogBreedsWeb.Api.V1.BreedsControllerTest do
-  use DogBreedsWeb.ConnCase
+defmodule LinnaeusWeb.Api.V1.BreedsControllerTest do
+  use LinnaeusWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~s(/api/v1/breeds/))
