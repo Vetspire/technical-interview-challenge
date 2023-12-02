@@ -1,7 +1,7 @@
-defmodule Linneaus.Dog.Breed do
+defmodule Linnaeus.Dog.Breed do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Linneaus.Dog
+  alias Linnaeus.Dog
 
   @moduledoc """
   Model representing a dog breed.
@@ -24,7 +24,7 @@ defmodule Linneaus.Dog.Breed do
 
   """
 
-  @derive Linneaus.Breed
+  @derive Linnaeus.Breed
 
   schema "dog_breeds" do
     field :name, :string
@@ -36,7 +36,7 @@ defmodule Linneaus.Dog.Breed do
   def new(attrs) do
     %__MODULE__{}
     |> changeset(attrs)
-    |> Linneaus.Repo.insert()
+    |> Linnaeus.Repo.insert()
   end
 
   @doc false

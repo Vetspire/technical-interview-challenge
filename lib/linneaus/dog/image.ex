@@ -1,8 +1,8 @@
-defmodule Linneaus.Dog.Image do
+defmodule Linnaeus.Dog.Image do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Linneaus.Dog
+  alias Linnaeus.Dog
 
   @moduledoc """
   A model representing an image of a dog breed.
@@ -23,6 +23,8 @@ defmodule Linneaus.Dog.Image do
   and each new animal type will add 2 new tables to the database. Or if we add
   a new protocol, that adds 1 more table for each animal type.
   """
+
+  @derive Linnaeus.Image
 
   schema "dog_images" do
     field :asset_url, :string

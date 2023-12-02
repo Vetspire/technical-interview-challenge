@@ -10,7 +10,9 @@ describe("<App />", () => {
   test("renders", async () => {
     jest
       .spyOn(Api, "get")
-      .mockImplementationOnce(() => Promise.resolve(BreedHandlers.MOCK_BREEDS));
+      .mockImplementationOnce(() =>
+        Promise.resolve(BreedHandlers.MOCK_RESPONSE),
+      );
     render(<App />);
     await waitFor(() =>
       expect(

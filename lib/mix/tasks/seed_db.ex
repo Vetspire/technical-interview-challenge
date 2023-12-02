@@ -1,8 +1,8 @@
-defmodule Mix.Tasks.Linneaus.SeedDb do
+defmodule Mix.Tasks.Linnaeus.SeedDb do
   require Logger
   use Mix.Task
 
-  alias Linneaus.Dog
+  alias Linnaeus.Dog
 
   @moduledoc """
   Seeds the database using the list of images in priv/images/dogs.
@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Linneaus.SeedDb do
   @requirements ["app.config", "app.start"]
 
   @static_path Path.join([
-                 :code.priv_dir(:linneaus),
+                 :code.priv_dir(:linnaeus),
                  "static",
                  "images",
                  "dogs"

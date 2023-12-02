@@ -1,25 +1,23 @@
 defmodule LinnaeusWeb.Api.V1.BreedsController do
   use LinnaeusWeb, :controller
 
-  @breeds [:code.priv_dir(:linnaeus), "static", "images", "dogs"]
-          |> Path.join()
-          |> File.ls!()
-          |> Enum.with_index()
-          |> Enum.map(fn {file, idx} ->
-            name =
-              String.split(file, ".")
-              |> Enum.at(0)
-              |> String.split("_")
-              |> Enum.map_join(" ", &String.capitalize/1)
+  @known_types ["dog"]
 
-            %{
-              name: name,
-              id: idx + 1,
-              image_path: Path.join(["/", "images", "dogs", file])
-            }
-          end)
+  def index(conn, %{"type" => type}) when type in @known_types do
+    json(conn, separate_assocs(type))
+  end
 
   def index(conn, %{}) do
-    json(conn, @breeds)
+    conn
+    |> put_status(:not_found)
+    |> json(%{})
+  end
+
+  @spec separate_assocs(String.t()) :: Linnaeus.Breed.assoc_map()
+  def separate_assocs(type) do
+    [Linnaeus, String.capitalize(type), :Breed]
+    |> Module.concat()
+    |> Linnaeus.Model.all(preload: :image)
+    |> Enum.reduce(%{breeds: %{}, images: %{}}, &Linnaeus.Breed.separate_assocs/2)
   end
 end

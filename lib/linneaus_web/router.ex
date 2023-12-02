@@ -23,7 +23,7 @@ defmodule LinnaeusWeb.Router do
   scope "/api/v1", LinnaeusWeb.Api.V1 do
     # LinnaeusWeb.Api.V1
     pipe_through :api
-    resources "/breeds", BreedsController, only: [:index, :show, :create]
+    resources "/breeds/:type", BreedsController, only: [:index, :show, :create]
   end
 
   # Other scopes may use custom stacks.

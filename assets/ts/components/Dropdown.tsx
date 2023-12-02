@@ -23,7 +23,7 @@ const Dropdown: FC = () => {
     <div>
       <select value={selectedBreed ?? undefined} onChange={onSelect}>
         <option>Select a breed:</option>
-        {query.data.map(({ id, name }) => (
+        {Array.from(query.data.breeds.values()).map(({ id, name }) => (
           <option value={id} key={id}>
             {name}
           </option>

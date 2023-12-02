@@ -1,7 +1,7 @@
-defmodule Linneaus.Dog.BreedTest do
+defmodule Linnaeus.Dog.BreedTest do
   alias Ecto.Changeset
-  alias Linneaus.Dog
-  use Linneaus.DataCase
+  alias Linnaeus.Dog
+  use Linnaeus.DataCase
 
   @valid_attrs %{
     name: "German Shepherd",
@@ -50,11 +50,11 @@ defmodule Linneaus.Dog.BreedTest do
     end
 
     test "does not create image record if breed is invalid" do
-      assert Linneaus.Repo.all(Dog.Image) |> length() == 0
+      assert Linnaeus.Repo.all(Dog.Image) |> length() == 0
       assert {:ok, %Dog.Breed{}} = Dog.Breed.new(@valid_attrs)
-      assert Linneaus.Repo.all(Dog.Image) |> length() == 1
+      assert Linnaeus.Repo.all(Dog.Image) |> length() == 1
       assert {:error, %Changeset{}} = Dog.Breed.new(@valid_attrs)
-      assert Linneaus.Repo.all(Dog.Image) |> length() == 1
+      assert Linnaeus.Repo.all(Dog.Image) |> length() == 1
     end
   end
 end

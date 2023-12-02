@@ -1,4 +1,4 @@
-defmodule Linneaus.Repo.Migrations.CreateDogBreeds do
+defmodule Linnaeus.Repo.Migrations.CreateDogBreeds do
   use Ecto.Migration
 
   def change do

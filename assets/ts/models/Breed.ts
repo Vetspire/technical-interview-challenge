@@ -1,7 +1,7 @@
 interface Breed {
   id: number;
   name: string;
-  image_path: string;
+  image_id: number;
 }
 
 export default Breed;
