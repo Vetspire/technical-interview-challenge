@@ -22,12 +22,9 @@ defmodule LinnaeusWeb.Api.V1.BreedsControllerTest do
 
       for {id, breed} <- breeds do
         assert id =~ ""
-        assert breed["id"] == String.to_integer(id)
-        assert breed |> Map.keys() |> length() == 3
-
-        for key <- ["name", "image_id"] do
-          assert Map.fetch!(breed, key)
-        end
+        assert breed |> Map.keys() |> length() == 2
+        assert Map.fetch!(breed, "id") == String.to_integer(id)
+        assert Map.fetch!(breed, "name")
       end
 
       assert map_size(images) == @limit

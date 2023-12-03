@@ -4,7 +4,10 @@ defmodule LinnaeusWeb.Api.V1.BreedsController do
   @known_types ["dog"]
 
   def index(conn, %{"type" => type}) when type in @known_types do
-    json(conn, separate_assocs(type))
+    json(conn, %{
+      breeds: all(type, :Breed),
+      images: all(type, :Image)
+    })
   end
 
   def index(conn, %{}) do
@@ -13,11 +16,11 @@ defmodule LinnaeusWeb.Api.V1.BreedsController do
     |> json(%{})
   end
 
-  @spec separate_assocs(String.t()) :: Linnaeus.Breed.assoc_map()
-  def separate_assocs(type) do
-    [Linnaeus, String.capitalize(type), :Breed]
+  @spec all(String.t(), :Breed | :Image) :: list(Linnaeus.Dog.Breed)
+  def all(type, breed_or_image) do
+    [Linnaeus, String.capitalize(type), breed_or_image]
     |> Module.concat()
-    |> Linnaeus.Model.all(preload: :image)
-    |> Enum.reduce(%{breeds: %{}, images: %{}}, &Linnaeus.Breed.separate_assocs/2)
+    |> Linnaeus.Repo.all()
+    |> Enum.into(%{}, &{&1.id, &1})
   end
 end

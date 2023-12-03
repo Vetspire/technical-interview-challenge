@@ -1,7 +1,6 @@
 defmodule Linnaeus.Dog.Breed do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Linnaeus.Dog
 
   @moduledoc """
   Model representing a dog breed.
@@ -25,10 +24,10 @@ defmodule Linnaeus.Dog.Breed do
   """
 
   @derive Linnaeus.Breed
+  @derive {Jason.Encoder, only: [:id, :name]}
 
   schema "dog_breeds" do
     field :name, :string
-    has_one :image, Dog.Image
 
     timestamps(type: :utc_datetime)
   end
@@ -43,8 +42,7 @@ defmodule Linnaeus.Dog.Breed do
   def changeset(breed, attrs) do
     breed
     |> cast(attrs, [:name])
-    |> cast_assoc(:image)
-    |> validate_required([:name, :image])
+    |> validate_required([:name])
     |> unique_constraint(:name)
   end
 end

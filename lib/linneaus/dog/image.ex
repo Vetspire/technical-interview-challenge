@@ -25,6 +25,7 @@ defmodule Linnaeus.Dog.Image do
   """
 
   @derive Linnaeus.Image
+  @derive {Jason.Encoder, only: [:asset_url, :breed_id, :id]}
 
   schema "dog_images" do
     field :asset_url, :string
@@ -33,11 +34,18 @@ defmodule Linnaeus.Dog.Image do
     timestamps(type: :utc_datetime)
   end
 
+  def new(attrs) do
+    %__MODULE__{}
+    |> changeset(attrs)
+    |> Linnaeus.Repo.insert()
+  end
+
   @doc false
   def changeset(image, attrs) do
     image
     |> cast(attrs, [:asset_url])
-    |> validate_required([:asset_url])
+    |> cast_assoc(:breed)
+    |> validate_required([:asset_url, :breed])
     |> unique_constraint(:asset_url)
   end
 end

@@ -41,17 +41,17 @@ defmodule Mix.Tasks.Linnaeus.SeedDb do
   def seed_db(%{limit: limit}) do
     @files
     |> Enum.take(limit)
-    |> Enum.each(&insert_breed/1)
+    |> Enum.each(&insert_breed_image/1)
   end
 
-  defp insert_breed(file_name) do
-    case Dog.Breed.new(%{
-           name: parse_breed_name(file_name),
-           image: %{
-             asset_url: Path.join(["images", "dogs", file_name])
+  defp insert_breed_image(file_name) do
+    case Dog.Image.new(%{
+           asset_url: Path.join(["images", "dogs", file_name]),
+           breed: %{
+             name: parse_breed_name(file_name)
            }
          }) do
-      {:ok, %Dog.Breed{}} ->
+      {:ok, %Dog.Image{breed: %Dog.Breed{}}} ->
         :ok
 
       {:error, changeset} ->
