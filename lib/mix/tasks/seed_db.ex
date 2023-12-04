@@ -41,12 +41,13 @@ defmodule Mix.Tasks.Linnaeus.SeedDb do
   def seed_db(%{limit: limit}) do
     @files
     |> Enum.take(limit)
+    |> Enum.reject(&dir?/1)
     |> Enum.each(&insert_breed_image/1)
   end
 
   defp insert_breed_image(file_name) do
     case Dog.Image.new(%{
-           asset_url: Path.join(["images", "dogs", file_name]),
+           asset_url: Path.join(["/", "images", "dogs", file_name]),
            breed: %{
              name: parse_breed_name(file_name)
            }
@@ -68,5 +69,11 @@ defmodule Mix.Tasks.Linnaeus.SeedDb do
     |> Enum.at(0)
     |> String.split("_")
     |> Enum.map_join(" ", &String.capitalize/1)
+  end
+
+  defp dir?(file_name) do
+    @static_path
+    |> Path.join(file_name)
+    |> File.dir?()
   end
 end

@@ -10,9 +10,9 @@ const MOCK_BREEDS: Breeds.ApiSuccessResponse["breeds"] = Object.fromEntries(
     return [
       id.toString(),
       {
-        id: i + 1,
+        id,
         name,
-        image_id: i + 1,
+        image_id: id,
       },
     ];
   }),

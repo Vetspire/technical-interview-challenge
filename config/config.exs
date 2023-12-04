@@ -22,6 +22,8 @@ config :linnaeus, LinnaeusWeb.Endpoint,
   pubsub_server: Linnaeus.PubSub,
   live_view: [signing_salt: "O9F3oR9n"]
 
+config :linnaeus, Linnaeus.Uploader, uploader_module: Linnaeus.Uploader.Priv
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

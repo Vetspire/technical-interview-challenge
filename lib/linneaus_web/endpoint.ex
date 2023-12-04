@@ -37,9 +37,8 @@ defmodule LinnaeusWeb.Endpoint do
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
-    pass: [],
-    json_decoder: Phoenix.json_library(),
-    multipart_to_params: {Linnaeus.Multipart, :multipart_to_params, []}
+    pass: ["*/*"],
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head

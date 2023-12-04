@@ -1,5 +1,7 @@
 defmodule LinnaeusWeb.Api.V1.BreedsControllerTest do
   use LinnaeusWeb.ConnCase
+
+  alias Linnaeus.Uploader.Priv
   alias Mix.Tasks.Linnaeus.SeedDb
 
   @limit 2
@@ -48,24 +50,55 @@ defmodule LinnaeusWeb.Api.V1.BreedsControllerTest do
     end
   end
 
-  @valid_attrs %{
-    "asset_url" => "http://cdn.com/path/to/asset.jpg",
-    "breed_name" => "German Shepherd"
-  }
+  def set_parent_folder(%{tmp_dir: tmp_dir}) do
+    :ok = Priv.set_parent_folder(tmp_dir)
+  end
+
+  @file_name "Husky.jpg"
+
+  def build_upload_params(%{tmp_dir: tmp_dir}) do
+    path =
+      Path.join(tmp_dir, "tmp_image")
+
+    File.mkdir_p!(path)
+
+    priv_dir = Path.join([:code.priv_dir(:linnaeus), "static", "images", "dogs"])
+
+    image_name =
+      priv_dir
+      |> File.ls!()
+      |> List.first()
+
+    priv_dir
+    |> Path.join(image_name)
+    |> File.cp!(Path.join(path, @file_name))
+
+    {:ok,
+     upload: %Plug.Upload{
+       path: Path.join(path, @file_name),
+       filename: @file_name,
+       content_type: "image/jpg"
+     }}
+  end
 
   describe "POST /api/v1/breeds/:type" do
-    test "returns 200 when breed is created", %{conn: conn} do
+    @describetag :tmp_dir
+    setup [:set_parent_folder, :build_upload_params]
+
+    test "returns 200 when breed is created", %{conn: conn, upload: upload} do
       conn =
-        conn
-        |> assign(:asset_url, @valid_attrs["asset_url"])
-        |> post(~s(/api/v1/breeds/dog), @valid_attrs)
+        post(conn, ~s(/api/v1/breeds/dog), %{
+          "breed_name" => "Husky",
+          "image_file" => upload
+        })
 
       response = assert json_response(conn, :created)
       assert %{"breeds" => %{}, "images" => %{}} = response
     end
 
+    @tag :capture_log
     test "returns 400 if post body is invalid", %{conn: conn} do
-      conn = post(conn, ~s(/api/v1/breeds/dog), Map.delete(@valid_attrs, "asset_url"))
+      conn = post(conn, ~s(/api/v1/breeds/dog), %{"breed_name" => "Husky"})
       response = assert json_response(conn, 400)
       assert response == %{"errors" => %{"asset_url" => ["can't be blank"]}}
     end
