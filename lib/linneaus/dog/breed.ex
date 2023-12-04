@@ -24,10 +24,10 @@ defmodule Linnaeus.Dog.Breed do
   """
 
   @derive Linnaeus.Breed
-  @derive {Jason.Encoder, only: [:id, :name]}
 
   schema "dog_breeds" do
     field :name, :string
+    has_one :image, Linnaeus.Dog.Image
 
     timestamps(type: :utc_datetime)
   end

@@ -18,6 +18,7 @@ defmodule LinnaeusWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/breeds/:type", PageController, :home
   end
 
   scope "/api/v1", LinnaeusWeb.Api.V1 do

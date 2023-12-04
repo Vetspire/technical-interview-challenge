@@ -1,4 +1,4 @@
-import { QueryFunction } from "@tanstack/react-query";
+import { MutationFunction, QueryFunction } from "@tanstack/react-query";
 
 import Breed from "../models/Breed";
 import Image from "../models/Image";
@@ -36,4 +36,14 @@ export const get: QueryFunction<SuccessResponse, ["breeds", string]> = ({
   queryKey: [, type],
 }) => Api.get<ApiSuccessResponse>(path(type)).then(parseResponse);
 
-export const post = (breed: FormData) => Api.post<FormData, Breed>(PATH, breed);
+export interface PostProps {
+  form: FormData;
+  type?: string;
+}
+
+export const post: MutationFunction<SuccessResponse, PostProps> = ({
+  type = "dog",
+  form,
+}) => {
+  return Api.post<FormData, SuccessResponse>(path(type), form);
+};

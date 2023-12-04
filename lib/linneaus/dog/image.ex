@@ -25,7 +25,6 @@ defmodule Linnaeus.Dog.Image do
   """
 
   @derive Linnaeus.Image
-  @derive {Jason.Encoder, only: [:asset_url, :breed_id, :id]}
 
   schema "dog_images" do
     field :asset_url, :string
@@ -45,7 +44,7 @@ defmodule Linnaeus.Dog.Image do
     image
     |> cast(attrs, [:asset_url])
     |> cast_assoc(:breed)
-    |> validate_required([:asset_url, :breed])
+    |> validate_required([:asset_url])
     |> unique_constraint(:asset_url)
   end
 end

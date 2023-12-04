@@ -4,29 +4,32 @@ import { SelectedBreedContext } from "../contexts/SelectedBreed";
 import useBreedsQuery from "../hooks/useBreedsQuery";
 
 const SelectedBreed: FC = () => {
-  const query = useBreedsQuery();
   const selectedBreedId = useContext(SelectedBreedContext);
+  const { data } = useBreedsQuery();
+
   const breed = useMemo(() => {
-    return query.data && selectedBreedId
-      ? query.data.breeds.get(selectedBreedId)
-      : null;
-  }, [selectedBreedId, query.data]);
+    return data && selectedBreedId ? data.breeds.get(selectedBreedId) : null;
+  }, [selectedBreedId, data]);
 
   const image = useMemo(() => {
-    return query.data && breed ? query.data.images.get(breed.image_id) : null;
-  }, [breed, query.data]);
+    return data && breed ? data.images.get(breed.image_id) : null;
+  }, [breed, data]);
 
   if (!breed) return null;
   if (!image)
-    throw new Error("unable to find image for breed", {
-      cause: {
-        data: query.data,
-        breed,
-      },
+    throw new Error("unable to find image for breed!", {
+      cause: { data, breed },
     });
+
   return (
     <div>
-      <img src={image.asset_url} />
+      <img
+        src={
+          image.asset_url.startsWith("/")
+            ? image.asset_url
+            : "/" + image.asset_url
+        }
+      />
     </div>
   );
 };
